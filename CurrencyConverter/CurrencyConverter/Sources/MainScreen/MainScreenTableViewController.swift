@@ -8,16 +8,18 @@
 import UIKit
 
 class MainScreenTableViewController: UIViewController {
-
+    
+    private var presenter: PMainScreenPresenter
     private let tableView: MainScreenTableView
     //private let searchView = SearchView()
     //private let loadData = PicturesNetwork()
 
-    init(model: CurrencyData) {
-        self.tableView = MainScreenTableView(model: model)
+    init(presenter: PMainScreenPresenter,  model: CurrencyData) {
+        self.presenter = presenter
+        self.tableView = MainScreenTableView(presenter: presenter)
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

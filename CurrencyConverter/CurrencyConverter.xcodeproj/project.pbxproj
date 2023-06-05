@@ -15,10 +15,11 @@
 		2109F22C2A2C97D900602C6B /* MainScreenTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2109F22B2A2C97D900602C6B /* MainScreenTableViewController.swift */; };
 		2109F22E2A2C97FB00602C6B /* MainScreenTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2109F22D2A2C97FB00602C6B /* MainScreenTableView.swift */; };
 		2109F2302A2C986B00602C6B /* MainScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2109F22F2A2C986B00602C6B /* MainScreenTableViewCell.swift */; };
-		2109F2322A2C988500602C6B /* MainScreenData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2109F2312A2C988500602C6B /* MainScreenData.swift */; };
+		2109F2322A2C988500602C6B /* CurrencyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2109F2312A2C988500602C6B /* CurrencyData.swift */; };
 		2109F2342A2CA83500602C6B /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2109F2332A2CA83500602C6B /* Color.swift */; };
 		2109F2372A2CA8B500602C6B /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2109F2362A2CA8B500602C6B /* SnapKit */; };
 		2109F2392A2CAA2300602C6B /* FontSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2109F2382A2CAA2300602C6B /* FontSettings.swift */; };
+		2109F23B2A2E538100602C6B /* MainScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2109F23A2A2E538100602C6B /* MainScreenPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,9 +33,10 @@
 		2109F22B2A2C97D900602C6B /* MainScreenTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenTableViewController.swift; sourceTree = "<group>"; };
 		2109F22D2A2C97FB00602C6B /* MainScreenTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenTableView.swift; sourceTree = "<group>"; };
 		2109F22F2A2C986B00602C6B /* MainScreenTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenTableViewCell.swift; sourceTree = "<group>"; };
-		2109F2312A2C988500602C6B /* MainScreenData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenData.swift; sourceTree = "<group>"; };
+		2109F2312A2C988500602C6B /* CurrencyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyData.swift; sourceTree = "<group>"; };
 		2109F2332A2CA83500602C6B /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		2109F2382A2CAA2300602C6B /* FontSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontSettings.swift; sourceTree = "<group>"; };
+		2109F23A2A2E538100602C6B /* MainScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,10 +110,11 @@
 		2109F22A2A2C974D00602C6B /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
+				2109F23A2A2E538100602C6B /* MainScreenPresenter.swift */,
+				2109F2312A2C988500602C6B /* CurrencyData.swift */,
 				2109F22B2A2C97D900602C6B /* MainScreenTableViewController.swift */,
 				2109F22D2A2C97FB00602C6B /* MainScreenTableView.swift */,
 				2109F22F2A2C986B00602C6B /* MainScreenTableViewCell.swift */,
-				2109F2312A2C988500602C6B /* MainScreenData.swift */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -199,8 +202,9 @@
 				2109F2392A2CAA2300602C6B /* FontSettings.swift in Sources */,
 				2109F2132A2C934500602C6B /* SceneDelegate.swift in Sources */,
 				2109F2342A2CA83500602C6B /* Color.swift in Sources */,
-				2109F2322A2C988500602C6B /* MainScreenData.swift in Sources */,
+				2109F2322A2C988500602C6B /* CurrencyData.swift in Sources */,
 				2109F2302A2C986B00602C6B /* MainScreenTableViewCell.swift in Sources */,
+				2109F23B2A2E538100602C6B /* MainScreenPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,8 +348,7 @@
 				INFOPLIST_FILE = CurrencyConverter/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -371,8 +374,7 @@
 				INFOPLIST_FILE = CurrencyConverter/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

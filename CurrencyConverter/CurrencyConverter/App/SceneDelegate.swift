@@ -17,7 +17,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         
         let currencyData = CurrencyData()
-        let viewController = MainScreenTableViewController(model: currencyData) 
+        let presenter = MainScreenPresenter(model: currencyData)
+        let viewController = MainScreenTableViewController(presenter: presenter, model: currencyData)
+        presenter.setVC(view: viewController)
         let navigationController = UINavigationController(rootViewController: viewController)
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()

@@ -7,12 +7,16 @@
 
 import UIKit
 
+
+
 final class MainScreenTableView: UITableView {
 
-    private let currency: CurrencyData
+    //private let currency: CurrencyData
+    //private let currencyArray = [Currency]()
+    private var presenter: PMainScreenPresenter
     
-    init(model: CurrencyData) {
-        self.currency = model
+    init(presenter:  PMainScreenPresenter) {
+        self.presenter = presenter
         super.init(frame: .zero, style: .plain)
         self.delegate = self
         self.dataSource = self
@@ -44,12 +48,13 @@ final class MainScreenTableView: UITableView {
 extension MainScreenTableView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.currency.currencyCount()
+        self.presenter.numberOfCurrency
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MainScreenTableViewCell.reuseIdentifier, for: indexPath) as? MainScreenTableViewCell else { return UITableViewCell()}
-        cell.setUp(data: self.currency.getData(indexPath.row))
+        self.presenter.configure(cell: cell, forRow: indexPath.row)
+        //cell.setUp(data: self.currency.getData(indexPath.row))
         //self.currency.getData(indexPath.row)
         return cell
     }

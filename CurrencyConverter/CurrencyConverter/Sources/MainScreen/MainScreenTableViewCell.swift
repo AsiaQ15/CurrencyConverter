@@ -27,9 +27,16 @@ class MainScreenTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setUp(data: Currency) {
-        self.labelName.text = data.name
-        self.labelCost.text = String(data.cost)
+    func displayName(name: String) {
+        self.labelName.text = name
+    }
+    
+    func displayCost(cost: String) {
+        self.labelCost.text = cost
+    }
+    
+    func displayImage(image: UIImage) {
+        self.image.image = image
     }
     
 }
@@ -49,14 +56,23 @@ private extension MainScreenTableViewCell {
             make.left.equalToSuperview()
         }
         
-//        self.viewCell.addSubview(image)
-//        self.image.contentMode = Constants.Image.content
-//        self.image.snp.makeConstraints { make in
-//            make.top.equalToSuperview()
-//            make.bottom.equalToSuperview()
-//            make.right.equalToSuperview()
-//            make.left.equalToSuperview()
-//        }
+        self.viewCell.addSubview(image)
+      
+        //self.image.contentMode = Constants.Image.content
+        // set the frame of the imageview
+        self.image.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
+
+        // set the cornerradius of the imageview to half of the width or height, whichever is smaller
+        self.image.layer.cornerRadius = min(self.image.frame.width, self.image.frame.height) / 2
+
+        // set the maskstobounds property of the imageview's layer to true
+        self.image.layer.masksToBounds = true
+        self.image.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(Constants.topInset)
+            make.left.equalToSuperview().inset(Constants.leftInset)
+            make.width.equalTo(Constants.widthImage)
+            make.height.equalTo(Constants.heightImage)
+        }
         
         self.viewCell.addSubview(labelName)
         self.labelName.backgroundColor = Constants.LabelName.backgroundColor
@@ -87,19 +103,19 @@ private extension MainScreenTableViewCell {
 private enum Constants {
 
     enum ViewCell {
-        static let backgroundColor = UIColor.jcRed
+        static let backgroundColor = UIColor.lightGray//UIColor.jcRed
     }
     
     enum LabelName {
         static let backgroundColor = UIColor.jcRed
         static let textColor = UIColor.white
-        static let textFont = Fonts.title1
+        static let textFont = Fonts.title3
     }
     
     enum LabelCost {
         static let backgroundColor = UIColor.jcRed
         static let textColor = UIColor.white
-        static let textFont = Fonts.title1
+        static let textFont = Fonts.title3
     }
     
     enum Image {
@@ -114,7 +130,10 @@ private enum Constants {
 //    }
 
     static let heightLable = 30
-    static let widthLable = 200
+    static let widthLable = 250
+    
+    static let heightImage = 80
+    static let widthImage = 80
     
     static let leftInset = 10
     static let rightInset = 10

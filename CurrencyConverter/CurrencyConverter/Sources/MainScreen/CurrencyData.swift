@@ -5,11 +5,12 @@
 //  Created by Ася Купинская on 04.06.2023.
 //
 
-import Foundation
+import UIKit
 
 struct Currency {
     var name: String
     var cost: Float
+    var photo: UIImage
     
 }
 
@@ -25,9 +26,9 @@ final class CurrencyData {
     }
     
     func addData() {
-        currencies.append(Currency(name: "RUB", cost: 1.0))
-        currencies.append(Currency(name: "USD", cost: 88.88))
-        currencies.append(Currency(name: "EUR", cost: 87.10))
+        currencies.append(Currency(name: "RUB", cost: 1.0, photo: UIImage(imageLiteralResourceName: "RUB.jpg") ))
+        currencies.append(Currency(name: "USD", cost: 88.88, photo: UIImage(imageLiteralResourceName: "USD.jpg") ))
+        currencies.append(Currency(name: "EUR", cost: 87.10, photo: UIImage(imageLiteralResourceName: "EUR.jpg") ))
     }
     
     func getData(_ id: Int) -> Currency {
