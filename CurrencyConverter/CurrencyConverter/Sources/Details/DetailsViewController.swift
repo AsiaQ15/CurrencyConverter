@@ -44,6 +44,9 @@ final class DetailsViewController: UIViewController {
         self.detailsView.setFirstCount(count: count)
     }
     
+    func setName(name: String) {
+        self.navigationItem.title = name
+    }
 }
 
 private extension DetailsViewController {

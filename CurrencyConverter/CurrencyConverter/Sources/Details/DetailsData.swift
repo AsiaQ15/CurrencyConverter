@@ -61,5 +61,8 @@ final class DetailsData {
         currencyFirst.cost
     }
     
+    func getScreenName() -> String {
+        "\(currencyFirst.name) \(currencySecond.name)"
+    }
 
 }
