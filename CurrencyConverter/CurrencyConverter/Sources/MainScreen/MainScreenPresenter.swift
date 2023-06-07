@@ -12,6 +12,7 @@ protocol PMainScreenPresenter: AnyObject {
     var numberOfCurrency: Int {get}
     
     func configure(cell: MainScreenTableViewCell, forRow row: Int)
+    func openDetails(index: Int)
     
 }
 
@@ -19,18 +20,25 @@ final class MainScreenPresenter: PMainScreenPresenter {
     
     private weak var mainSreenView: MainScreenTableViewController?
     private let model: CurrencyData
+    private var detailsPresnter: PDetailsPresenter
     
     var numberOfCurrency: Int {
         return model.currencyCount()
     }
     
-    init(model: CurrencyData) {
+    init(model: CurrencyData, presenter: PDetailsPresenter) {
         self.model = model
+        self.detailsPresnter = presenter
     }
     
-    func setVC(view: MainScreenTableViewController){
+    func setVC(view: MainScreenTableViewController?){
         self.mainSreenView = view
     }
+    
+//    func setNextPresenter(presenter: PDetailsPresenter?){
+//        self.detailsPresnter = presenter
+//        print(self.detailsPresnter!)
+//    }
 
     func getData(id: Int) -> Currency {
         self.model.getData(id)
@@ -47,6 +55,13 @@ final class MainScreenPresenter: PMainScreenPresenter {
         //cell.display(title: book.title)
         //cell.display(author: book.author)
         //cell.display(releaseDate: book.releaseDate?.relativeDescription() ?? "Unknown")
+    }
+    
+    func openDetails(index: Int) {
+        if let viewController = detailsPresnter.getVC() {
+            detailsPresnter.setData(first: self.getData(id: 0), second: self.getData(id: index))
+            mainSreenView?.navigationController?.pushViewController(viewController, animated: true)
+        }
     }
     
 }

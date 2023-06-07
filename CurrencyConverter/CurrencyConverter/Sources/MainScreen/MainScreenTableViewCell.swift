@@ -48,12 +48,13 @@ private extension MainScreenTableViewCell {
         self.contentView.backgroundColor = UIColor.clear
         
         self.contentView.addSubview(viewCell)
+        setShadow()
         self.viewCell.backgroundColor = Constants.ViewCell.backgroundColor
         self.viewCell.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.right.equalToSuperview()
-            make.left.equalToSuperview()
+            make.top.equalToSuperview().inset(5)
+            make.bottom.equalToSuperview().inset(5)
+            make.right.equalToSuperview().inset(5)
+            make.left.equalToSuperview().inset(5)
         }
         
         self.viewCell.addSubview(image)
@@ -96,6 +97,18 @@ private extension MainScreenTableViewCell {
             make.height.equalTo(Constants.heightLable)
         }
     
+    }
+    
+    private func setShadow() {
+        
+        self.viewCell.layer.cornerRadius = 8
+        self.viewCell.layer.borderWidth = 1
+        self.viewCell.layer.borderColor = UIColor.gray.cgColor
+        self.viewCell.layer.shadowOpacity = 0.5
+        self.viewCell.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+        self.viewCell.layer.shadowRadius = 3.0
+        self.viewCell.layer.shadowColor = UIColor.black.cgColor
+        self.viewCell.layer.masksToBounds = false
     }
 
 }

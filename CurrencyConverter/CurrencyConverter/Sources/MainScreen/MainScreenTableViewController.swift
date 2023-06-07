@@ -14,7 +14,7 @@ class MainScreenTableViewController: UIViewController {
     //private let searchView = SearchView()
     //private let loadData = PicturesNetwork()
 
-    init(presenter: PMainScreenPresenter,  model: CurrencyData) {
+    init(presenter: PMainScreenPresenter) {
         self.presenter = presenter
         self.tableView = MainScreenTableView(presenter: presenter)
         super.init(nibName: nil, bundle: nil)
@@ -26,6 +26,12 @@ class MainScreenTableViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+            self.tableView.setup{index in
+                self.presenter.openDetails(index: index)
+            }
+//        self.recipeView.setup { index in
+//            self.coordinatingController.push(module: .recipeDetailsVC, parameters: self.data.recipes[index], animated: true)
+//        }
     }
     
     override func loadView() {

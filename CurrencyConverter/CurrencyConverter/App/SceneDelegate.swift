@@ -16,10 +16,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
+        let presenterDetails = DetailsPresenter()
+        let detailsController = DetailsViewController(presenter: presenterDetails)
+        presenterDetails.setVC(view: detailsController)
+        
         let currencyData = CurrencyData()
-        let presenter = MainScreenPresenter(model: currencyData)
-        let viewController = MainScreenTableViewController(presenter: presenter, model: currencyData)
+        let presenter = MainScreenPresenter(model: currencyData, presenter: presenterDetails)
+        let viewController = MainScreenTableViewController(presenter: presenter)
         presenter.setVC(view: viewController)
+        
+        
+        //presenter.setNextPresenter(presenter: presenterDetails)
         let navigationController = UINavigationController(rootViewController: viewController)
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()

@@ -14,6 +14,7 @@ final class MainScreenTableView: UITableView {
     //private let currency: CurrencyData
     //private let currencyArray = [Currency]()
     private var presenter: PMainScreenPresenter
+    private var handler: ((Int) -> Void)?
     
     init(presenter:  PMainScreenPresenter) {
         self.presenter = presenter
@@ -25,6 +26,10 @@ final class MainScreenTableView: UITableView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setup(handler: @escaping ((Int) -> Void)) {
+        self.handler = handler
     }
     
 //    func addNewData(_ url: String) -> Int {
@@ -62,6 +67,12 @@ extension MainScreenTableView: UITableViewDataSource {
 
 extension MainScreenTableView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        100
+        115
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row != 0 {
+            self.handler?(indexPath.row)
+        }
     }
 }
