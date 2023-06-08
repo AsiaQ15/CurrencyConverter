@@ -11,6 +11,7 @@ import SnapKit
 final class DetailsViewController: UIViewController {
     
     private let detailsView = DetailsView()
+    private let chartView = DetailsChartView()
     private let presenter: PDetailsPresenter
     
     init(presenter: PDetailsPresenter) {
@@ -47,6 +48,10 @@ final class DetailsViewController: UIViewController {
     func setName(name: String) {
         self.navigationItem.title = name
     }
+    
+    func updateChart() {
+        self.chartView.drawLineChart()
+    }
 }
 
 private extension DetailsViewController {
@@ -60,7 +65,29 @@ private extension DetailsViewController {
             make.height.equalTo(190)
         }
         
+        self.view.addSubview(self.chartView)
+        self.chartView.snp.makeConstraints { make in
+            make.top.equalTo(self.detailsView.snp.bottom).offset(30)
+            make.left.equalToSuperview().inset(10)
+            make.right.equalToSuperview().inset(10)
+            make.bottom.equalToSuperview().inset(50)
+        }
+        
+     //   setShadow()
+        
     }
+    
+//    private func setShadow() {
+//        //print(self.)
+//        self.chartView.layer.cornerRadius = 8
+//        self.chartView.layer.borderWidth = 1
+//        self.chartView.layer.borderColor = UIColor.gray.cgColor
+//        self.chartView.layer.shadowOpacity = 0.5
+//        self.chartView.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+//        self.chartView.layer.shadowRadius = 3.0
+//        self.chartView.layer.shadowColor = UIColor.black.cgColor
+//        self.chartView.layer.masksToBounds = false
+//    }
 }
 
 extension DetailsViewController: UITextFieldDelegate {
@@ -71,6 +98,7 @@ extension DetailsViewController: UITextFieldDelegate {
         self.view.endEditing(true)
         let newCount = self.presenter.changeSecondCount(value: self.detailsView.getFirstCount())
         self.detailsView.setSecondCount(count: newCount)
+        
     }
     
     // user presses return key

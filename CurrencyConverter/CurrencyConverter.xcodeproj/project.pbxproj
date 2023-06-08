@@ -27,6 +27,7 @@
 		2109F2472A2F9E8500602C6B /* DetailsChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2109F2462A2F9E8500602C6B /* DetailsChartView.swift */; };
 		2109F2492A2FD9F300602C6B /* FlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2109F2482A2FD9F300602C6B /* FlowController.swift */; };
 		2109F24B2A2FDA1200602C6B /* CoordinatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2109F24A2A2FDA1200602C6B /* CoordinatingController.swift */; };
+		212059092A32480A0083B541 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 212059082A32480A0083B541 /* Charts */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2109F2372A2CA8B500602C6B /* SnapKit in Frameworks */,
+				212059092A32480A0083B541 /* Charts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +168,7 @@
 			name = CurrencyConverter;
 			packageProductDependencies = (
 				2109F2362A2CA8B500602C6B /* SnapKit */,
+				212059082A32480A0083B541 /* Charts */,
 			);
 			productName = CurrencyConverter;
 			productReference = 2109F20D2A2C934500602C6B /* CurrencyConverter.app */;
@@ -197,6 +200,7 @@
 			mainGroup = 2109F2042A2C934500602C6B;
 			packageReferences = (
 				2109F2352A2CA8B500602C6B /* XCRemoteSwiftPackageReference "SnapKit" */,
+				212059072A32480A0083B541 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = 2109F20E2A2C934500602C6B /* Products */;
 			projectDirPath = "";
@@ -456,6 +460,14 @@
 				kind = branch;
 			};
 		};
+		212059072A32480A0083B541 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -463,6 +475,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2109F2352A2CA8B500602C6B /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		212059082A32480A0083B541 /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 212059072A32480A0083B541 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
 		};
 /* End XCSwiftPackageProductDependency section */
 

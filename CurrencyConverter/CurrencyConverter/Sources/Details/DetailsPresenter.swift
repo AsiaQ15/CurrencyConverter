@@ -40,6 +40,7 @@ final class DetailsPresenter: PDetailsPresenter {
         detailsView?.setSecondCount(count: String(model.getSecondCount()))
         detailsView?.setFirstCount(count: String(model.getFirstCount()))
         detailsView?.setName(name: model.getScreenName())
+        detailsView?.updateChart()
     }
     
     func getVC() -> UIViewController? {
