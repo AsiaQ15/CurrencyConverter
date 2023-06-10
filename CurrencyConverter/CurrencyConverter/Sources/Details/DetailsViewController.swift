@@ -49,6 +49,10 @@ final class DetailsViewController: UIViewController {
         self.navigationItem.title = name
     }
     
+    func setChartData(xValues: [String], yValues: [Double], name: String) {
+        self.chartView.setData(xValues: xValues, yValues: yValues, name: name)
+    }
+    
     func updateChart() {
         self.chartView.drawLineChart()
     }

@@ -19,14 +19,14 @@ protocol PMainScreenPresenter: AnyObject {
 final class MainScreenPresenter: PMainScreenPresenter {
     
     private weak var mainSreenView: MainScreenTableViewController?
-    private let model: CurrencyData
+    private let model: MainScreenModel
     private var detailsPresnter: PDetailsPresenter
     
     var numberOfCurrency: Int {
         return model.currencyCount()
     }
     
-    init(model: CurrencyData, presenter: PDetailsPresenter) {
+    init(model: MainScreenModel, presenter: PDetailsPresenter) {
         self.model = model
         self.detailsPresnter = presenter
     }
@@ -48,7 +48,7 @@ final class MainScreenPresenter: PMainScreenPresenter {
         let currency = model.getData(row)
         
         cell.displayName(name: currency.name)
-        let cost = " 1 RUB = \(currency.cost) \(currency.name)"
+        let cost = " 1 \(self.model.getMainCurrency()) = \(currency.cost) \(currency.name)"
         cell.displayCost(cost: cost)
         cell.displayImage(image: currency.photo)
         
@@ -59,7 +59,9 @@ final class MainScreenPresenter: PMainScreenPresenter {
     
     func openDetails(index: Int) {
         if let viewController = detailsPresnter.getVC() {
-            detailsPresnter.setData(first: self.getData(id: 0), second: self.getData(id: index))
+            let dataForDetail = CurrencyConverterData.data.getDataForDetails(firstCurrency: self.model.getMainCurrency(), secondCurrency: self.getData(id: index).name)
+            print(dataForDetail)
+            detailsPresnter.setData(first: dataForDetail.0, second: dataForDetail.1, chartData: dataForDetail.2)
             mainSreenView?.navigationController?.pushViewController(viewController, animated: true)
         }
     }

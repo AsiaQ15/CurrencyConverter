@@ -15,7 +15,7 @@ protocol PDetailsPresenter: AnyObject {
    // func configure(cell: MainScreenTableViewCell, forRow row: Int)
     
     func getVC() -> UIViewController?
-    func setData(first: Currency, second: Currency)
+    func setData(first: Currency, second: Currency, chartData: [String : Double])
     func changeSecondCount(value: String) -> String
     
 }
@@ -25,8 +25,8 @@ final class DetailsPresenter: PDetailsPresenter {
     private var detailsView: DetailsViewController?
     private let model = DetailsData()
     
-    func setData(first: Currency, second: Currency) {
-        model.setData(first: first, second: second)
+    func setData(first: Currency, second: Currency, chartData: [String : Double]) {
+        model.setData(first: first, second: second, chart: chartData)
         configure()
     }
     
@@ -40,16 +40,18 @@ final class DetailsPresenter: PDetailsPresenter {
         detailsView?.setSecondCount(count: String(model.getSecondCount()))
         detailsView?.setFirstCount(count: String(model.getFirstCount()))
         detailsView?.setName(name: model.getScreenName())
+        let dataChart = model.getChartData()
+        detailsView?.setChartData(xValues: dataChart.0, yValues: dataChart.1, name: dataChart.2)
         detailsView?.updateChart()
     }
     
     func getVC() -> UIViewController? {
-        print(self.detailsView ?? 0)
+        //print(self.detailsView ?? 0)
         return self.detailsView
     }
     
     func changeSecondCount(value: String) -> String {
-        String(model.getNewSecondCout(value: Float(value) ?? 0))
+        String(model.getNewSecondCout(value: Double(value) ?? 0))
     }
     
 //

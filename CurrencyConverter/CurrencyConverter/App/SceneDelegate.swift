@@ -20,11 +20,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let detailsController = DetailsViewController(presenter: presenterDetails)
         presenterDetails.setVC(view: detailsController)
         
-        let currencyData = CurrencyData()
+        //let totaldata = CurrencyConverterData()
+        
+        let currencyData = MainScreenModel()
+        currencyData.setData(CurrencyConverterData.data.dataForMainScreen(mainCurrency: "RUB"))
+ 
         let presenter = MainScreenPresenter(model: currencyData, presenter: presenterDetails)
         let viewController = MainScreenTableViewController(presenter: presenter)
         presenter.setVC(view: viewController)
         
+//        let apiData = ConverterAPIDataManager()
+//        apiData.updateCost(currancyPair: "RUBEUR")
+//        let price = DataPrice()
+//        price.loadJson2()
         
         //presenter.setNextPresenter(presenter: presenterDetails)
         let navigationController = UINavigationController(rootViewController: viewController)

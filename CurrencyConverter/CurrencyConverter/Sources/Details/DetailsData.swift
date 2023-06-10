@@ -10,16 +10,19 @@ import UIKit
 
 final class DetailsData {
     
-    private var currencyFirst =  Currency(name: "first", cost: 0, photo: UIImage(systemName: "photo")!)
-    private var currencySecond = Currency(name: "first", cost: 0, photo: UIImage(systemName: "photo")!)
+    private var currencyFirst =  Currency(name: "first", nameFull: "", cost: 0, photo: UIImage(systemName: "photo")!)
+    private var currencySecond = Currency(name: "first", nameFull: "", cost: 0, photo: UIImage(systemName: "photo")!)
     
-    func setData(first: Currency, second: Currency) {
-        currencyFirst.name = first.name
-        currencyFirst.cost = first.cost
-        currencyFirst.photo = first.photo
-        currencySecond.name = second.name
-        currencySecond.cost = second.cost
-        currencySecond.photo = second.photo
+    private var chart = [String : Double]()
+    
+    func setData(first: Currency, second: Currency, chart: [String : Double]) {
+        self.currencyFirst.name = first.name
+        self.currencyFirst.cost = first.cost
+        self.currencyFirst.photo = first.photo
+        self.currencySecond.name = second.name
+        self.currencySecond.cost = second.cost
+        self.currencySecond.photo = second.photo
+        self.chart = chart
         
     }
     
@@ -36,7 +39,7 @@ final class DetailsData {
         currencyFirst.photo
     }
     
-    func getFirstCount() -> Float {
+    func getFirstCount() -> Double {
         currencySecond.cost
     }
     
@@ -53,16 +56,28 @@ final class DetailsData {
         currencySecond.photo
     }
     
-    func getNewSecondCout(value: Float) -> Float {
-        Float(round(1000 * value / currencySecond.cost) / 1000)
+    func getNewSecondCout(value: Double) -> Double {
+        Double(round(1000 * value / currencySecond.cost) / 1000)
     }
     
-    func getSecondCount() -> Float {
+    func getSecondCount() -> Double {
         currencyFirst.cost
     }
     
     func getScreenName() -> String {
         "\(currencyFirst.name) \(currencySecond.name)"
+    }
+    
+    func getChartData() -> ([String], [Double], String) {
+        var dates = [String]()
+        for key in self.chart.keys {
+            dates.append(String(key))
+        }
+        var cost = [Double]()
+        for val in self.chart.values {
+            cost.append(Double(val))
+        }
+        return (dates, cost, getScreenName())
     }
 
 }
