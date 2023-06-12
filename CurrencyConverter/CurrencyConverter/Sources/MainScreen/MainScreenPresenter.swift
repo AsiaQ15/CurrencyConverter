@@ -33,6 +33,7 @@ final class MainScreenPresenter: PMainScreenPresenter {
     
     func setVC(view: MainScreenTableViewController?){
         self.mainSreenView = view
+        self.mainSreenView?.setupHandler(handler: self.updateData)
     }
     
 //    func setNextPresenter(presenter: PDetailsPresenter?){
@@ -47,14 +48,10 @@ final class MainScreenPresenter: PMainScreenPresenter {
     func configure(cell: MainScreenTableViewCell, forRow row: Int) {
         let currency = model.getData(row)
         
-        cell.displayName(name: currency.name)
+        cell.displayName(name: currency.nameFull)
         let cost = " 1 \(self.model.getMainCurrency()) = \(currency.cost) \(currency.name)"
         cell.displayCost(cost: cost)
         cell.displayImage(image: currency.photo)
-        
-        //cell.display(title: book.title)
-        //cell.display(author: book.author)
-        //cell.display(releaseDate: book.releaseDate?.relativeDescription() ?? "Unknown")
     }
     
     func openDetails(index: Int) {
@@ -66,19 +63,42 @@ final class MainScreenPresenter: PMainScreenPresenter {
         }
     }
     
+    func updateData() {
+        let pairs = CurrencyConverterData.data.getPairs()
+     
+        for pair in pairs {
+            ConverterAPIDataManager.shared.updateData(currancyPair: pair, type: .actualPrice) { (currencies: [PricePair]?, error: ErrorModel?) in
+                if let error = error {
+                    print(error.Message!)
+                    //self.mainSreenView?.showAlertMessage(titleStr: "Error", messageStr: error.Message!)
+                }
+                if currencies?.isEmpty ?? true {
+                    print("NO data for pair \(pair)")
+                } else {
+                    if let newCost = currencies?[0].price {
+                        CurrencyConverterData.data.updateCost(pair: pair, newCost: newCost )
+                    }
+                }
+                self.model.setData(CurrencyConverterData.data.dataForMainScreen(mainCurrency: "RUB"))
+                self.mainSreenView?.reloadData()
+            }
+        }
+        
+
+        for pair in pairs {
+            ConverterAPIDataManager.shared.updateData(currancyPair: pair, type: .historical) { (currencies: HistoricalData?, error: ErrorModel?) in
+                if let error = error {
+                    print(error.Message!)
+                   // self.mainSreenView?.showAlertMessage(titleStr: "Error", messageStr: error.Message!)
+                }
+                if let historicalData = currencies?.historical {
+                    CurrencyConverterData.data.updateHistoricalData(pair: pair, data: historicalData)
+
+                }
+            }
+        }
+
+    }
+    
 }
 
-//extension MVPPresenter: IMVPPresenter
-//{
-//    func viewDidLoad(ui: IView) {
-//        self.ui = ui
-//
-//        self.ui?.set(text: self.model.firstName)
-//        self.ui?.tapButtonHandler = {
-//            //
-//        }
-//    }
-//}
-//
-//
-//}

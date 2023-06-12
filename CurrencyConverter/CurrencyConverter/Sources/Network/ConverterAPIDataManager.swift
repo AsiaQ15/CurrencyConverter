@@ -5,7 +5,7 @@
 //  Created by Ася Купинская on 10.06.2023.
 //
 enum requaestType {
-    case update
+    case actualPrice
     case historical
 }
 
@@ -14,18 +14,21 @@ import Foundation
 final class ConverterAPIDataManager {
     
     
-    
     static let shared = ConverterAPIDataManager()
     
-    private let api_key = "0d3c2d8abf0034710417d5c6878c521c"
+    private let api_key = "c634dac2ed75bec4e079d45961638b21"
+    //"0d3c2d8abf0034710417d5c6878c521c"
     
-    func updateData(currancyPair pair: String, type: requaestType) {
+    func updateData<T: Decodable>(currancyPair pair: String, type: requaestType, completion: @escaping (T?, ErrorModel?) -> ()) {
+        
         var url = "\(pair)?apikey=\(api_key)"
+        
         switch type {
-        case .update: url = Requests.udateCost + url
+        case .actualPrice: url = Requests.udateCost + url
         case .historical: url = Requests.historicalData + url
         }
-        //self.fetchApiData(urlString: url, completion: <#T##(Decodable?, ErrorModel?) -> ()#>)
+        print(url)
+        self.fetchApiData(urlString: url, completion: completion)
     }
     
     
@@ -76,29 +79,6 @@ final class ConverterAPIDataManager {
 
         task.resume()
     }
-    
-//    func availablePairs() {
-//        let url = URL(string: "https://financialmodelingprep.com/api/v3/symbol/available-forex-currency-pairs?apikey=\(api_key)")
-//
-//        var request = URLRequest(url: url!)
-//
-//        request.addValue("application/json", forHTTPHeaderField: "Accept")
-//        let task = URLSession.shared.dataTask(with: url!) { data, response, error in
-//            guard error == nil else {
-//                print(error!)
-//                return
-//            }
-//            guard let data = data else {
-//                print("Data is empty")
-//                return
-//            }
-//
-//            let json = try! JSONSerialization.jsonObject(with: data, options: [])
-//            print(json)
-//        }
-//
-//        task.resume()
-//    }
 
 }
 
@@ -129,6 +109,8 @@ private extension ConverterAPIDataManager {
     func handleSuccess<T: Decodable>(data: Data?) -> T? {
         guard let data = data else { return nil }
         do {
+//            let json = try! JSONSerialization.jsonObject(with: data, options: [])
+//            print(json)
             let responseModel = try JSONDecoder().decode(T.self, from: data)
             return responseModel
         } catch let jsonErr {
@@ -164,8 +146,9 @@ private extension ConverterAPIDataManager {
 }
 
 private enum Requests {
-    static let udateCost = "https://financialmodelingprep.com/api/v3/fx/"
-    static let historicalData = "https://financialmodelingprep.com/api/v3/historical-price-full/forex"
+    static let udateCost = "https://financialmodelingprep.com/api/v3/quote/"
+    //"https://financialmodelingprep.com/api/v3/fx/"
+    static let historicalData = "https://financialmodelingprep.com/api/v3/historical-price-full/"
 }
 
 

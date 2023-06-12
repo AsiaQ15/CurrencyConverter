@@ -11,8 +11,7 @@ class MainScreenTableViewController: UIViewController {
     
     private var presenter: PMainScreenPresenter
     private let tableView: MainScreenTableView
-    //private let searchView = SearchView()
-    //private let loadData = PicturesNetwork()
+    private var updateHandler: (() -> Void)?
 
     init(presenter: PMainScreenPresenter) {
         self.presenter = presenter
@@ -37,6 +36,23 @@ class MainScreenTableViewController: UIViewController {
     override func loadView() {
         super.loadView()
         configuration()
+    }
+    
+    func setupHandler(handler: @escaping (() -> Void)) {
+        self.updateHandler = handler
+    }
+    
+    func showAlertMessage(titleStr: String, messageStr: String) {
+        let alert = UIAlertController(title: titleStr, message: messageStr, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "OK", style: .cancel) { (alert) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(alertAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func reloadData() {
+        self.tableView.reloadData()
     }
         
 //    func startLoad() {
@@ -65,23 +81,22 @@ class MainScreenTableViewController: UIViewController {
 //        self.tableView.reloadData()
 //    }
     
+    
+    @objc func leftHandAction() {
+        guard let action = self.updateHandler else { return }
+        action()
+    }
+    
 }
 
 private extension MainScreenTableViewController {
     
     private func configuration() {
-//        self.view.addSubview(searchView)
-//        self.searchView.snp.makeConstraints { make in
-//            make.top.equalToSuperview()
-//            make.height.equalTo(Constants.searchViewHeight)
-//            make.left.equalToSuperview()
-//            make.right.equalToSuperview()
-//        }
-        //self.view = self.tableView
-        
-
         self.navigationItem.title = "Конвертер валют"
-      
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Обновить",
+                                                                style: .plain,
+                                                                target: self,
+                                                                action: #selector(leftHandAction))
         self.view.addSubview(tableView)
         self.tableView.snp.makeConstraints { make in
            // make.top.equalTo(self.topLayoutGuide.snp.bottom)
@@ -100,12 +115,8 @@ private extension MainScreenTableViewController {
 //        self.loadData.setupProgressHandler(handler: self.progressLoad(id:progress:))
     }
     
-//    private func showAlertController(title: String, message: String){
-//        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-//        let okAction = UIAlertAction(title: "OK", style: .default)
-//        alert.addAction(okAction)
-//        self.present(alert, animated: true, completion: nil)
-//    }
+    
+    
     
 }
 

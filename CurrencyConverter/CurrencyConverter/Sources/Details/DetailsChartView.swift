@@ -13,7 +13,7 @@ final class DetailsChartView: UIView {
 
     private var lineChartView = LineChartView()
     private var xValues = ["x1","x2","x3","x4","x5","x6","x7","x8","x9","x10","x11","x12"]
-    private var yValues: [Double] = [32 ,425 ,300 ,150 ,200,178,78,90,50,10,100,115]
+    private var yValues: [Double] = [32 ,425 ,300 ,150.0000001 ,200.234,178.999,78,90,50,10,100,115]
     private var labelName = "RUB/EUR"
     
     override init(frame: CGRect) {
@@ -42,9 +42,15 @@ final class DetailsChartView: UIView {
     }
     
     func drawLineChart() {
-        
+        setCghart()
         let max_val = yValues.max() ?? 0
         let min_val = yValues.min() ?? 0
+      
+        
+        
+
+        removeLimitLine()
+        
         self.addLimitLine(max_val, "\(max_val)", UIColor.red)
         self.addLimitLine(min_val, "\(min_val)", UIColor.green)
 
@@ -61,19 +67,36 @@ final class DetailsChartView: UIView {
         set1.colors = [UIColor.darkGray]
         set1.drawCirclesEnabled = false
         set1.lineWidth = 1.0
-
+        set1.valueFormatter = DefaultValueFormatter(decimals: 2)
         let data = LineChartData.init(dataSets: [set1])
+        
+     
+        
+
+        
+//        lineChartView.data?.notifyDataChanged()
+//        lineChartView.notifyDataSetChanged()
+        
+        let leftAxis = self.lineChartView.leftAxis
+//        leftAxis.axisMaximum = max_val + 1
+//        leftAxis.axisMinimum = min_val - 1
+        leftAxis.calculate(min: max_val + 1, max: min_val - 1)
+        let valFormatter = NumberFormatter()
+        valFormatter.numberStyle = .decimal
+        valFormatter.maximumFractionDigits = 2
+        //valFormatter.currencySymbol = "$"
+
+        leftAxis.valueFormatter = DefaultAxisValueFormatter(formatter: valFormatter)
+        
+        
+        
+        let xAxis = self.lineChartView.xAxis
+        xAxis.labelCount = xValues.count + 2
         
         lineChartView.data = data
         lineChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0, easingOption: .easeInBack)
         
-        let leftAxis = self.lineChartView.leftAxis
-        leftAxis.axisMaximum = max_val + 1
-        leftAxis.axisMinimum = min_val - 1
         
-        let xAxis = self.lineChartView.xAxis
-        xAxis.labelCount = xValues.count + 2
-
     }
     
 }
@@ -109,15 +132,33 @@ private extension DetailsChartView {
         leftAxis.labelPosition = .outsideChart
         leftAxis.gridColor = .lightGray
         leftAxis.gridAntialiasEnabled = false
-        leftAxis.labelCount = 10
+        //leftAxis.labelCount = 10
+        
+        
+//        leftAxis.labelCount = 16 //The number of Y-axis labels, the value is not necessarily, if forceLabelsEnabled is equal to YES, the specified number of labels is forced to be drawn, but may not be average
+//        leftAxis.forceLabelsEnabled = false //Do not force to draw a specified number of labels
+//        leftAxis.axisMinimum = 0 //Set the minimum value of the Y axis
+//        leftAxis.drawZeroLineEnabled = true //Draw from 0
+//        //leftAxis.axisMaximum = 1000 //Set the maximum value of the Y axis
+//        leftAxis.inverted = false //Whether to turn the Y axis upside down
+//        leftAxis.axisLineWidth = 1.0/UIScreen.main.scale //Set Y axis width
+//        leftAxis.axisLineColor = UIColor.cyan//Y axis color
+//        //leftAxis.valueFormatter = NumberFormatter()//Custom format
+//        //leftAxis.s //Digital suffix unit
+//        leftAxis.labelPosition = .outsideChart//label position
+//        leftAxis.labelTextColor = UIColor.red//Text color
+//        leftAxis.labelFont = UIFont.systemFont(ofSize: 10)//Text font
+        
+
         
         let xAxis = self.lineChartView.xAxis
         xAxis.granularityEnabled = true
         xAxis.labelTextColor = UIColor.black
-        xAxis.labelFont = UIFont.systemFont(ofSize: 10.0)
+        xAxis.labelFont = UIFont.systemFont(ofSize: 4.0)
         xAxis.labelPosition = .bottom
         xAxis.gridColor = .lightGray
         xAxis.axisLineColor = UIColor.black
+        
     }
     
     private func addLimitLine(_ value: Double, _ desc: String, _ color: UIColor) {
@@ -129,12 +170,23 @@ private extension DetailsChartView {
         limitLine.valueTextColor = color
         limitLine.labelPosition = .rightBottom
         self.lineChartView.leftAxis.addLimitLine(limitLine)
+        
+    }
+    
+    private func removeLimitLine() {
+        for  line in self.lineChartView.leftAxis.limitLines {
+            self.lineChartView.leftAxis.removeLimitLine(line)
+        }
     }
     
 }
 
 
-final class VDChartAxisValueFormatter: NSObject, AxisValueFormatter {
+final class VDChartAxisValueFormatter: NSObject, AxisValueFormatter, ValueFormatter{
+    func stringForValue(_ value: Double, entry: Charts.ChartDataEntry, dataSetIndex: Int, viewPortHandler: Charts.ViewPortHandler?) -> String {
+        return String(format:"%.2f%%",value)
+    }
+    
     
     var values:NSArray?
     
@@ -151,5 +203,40 @@ final class VDChartAxisValueFormatter: NSObject, AxisValueFormatter {
         }
         return values?.object(at: Int(value)) as! String
     }
+    
+//    func stringForValue(_ value: Double,
+//                        entry: ChartDataEntry,
+//                        dataSetIndex: Int,
+//                        viewPortHandler: ViewPortHandler?) -> String {
+//        print("stringForValue")
+//        let valueWithoutDecimalPart = String(format: "%.0f", value)
+//        return "\(valueWithoutDecimalPart)"
+//    }
 }
 
+//class DigitValueFormatter : NSObject, IValueFormatter {
+//
+//    func stringForValue(_ value: Double,
+//                        entry: ChartDataEntry,
+//                        dataSetIndex: Int,
+//                        viewPortHandler: ViewPortHandler?) -> String {
+//        let valueWithoutDecimalPart = String(format: "%.0f", value)
+//        return "\(valueWithoutDecimalPart)"
+//    }
+//}
+//class ChartValueFormatter: NSObject, ValueFormatter {
+//    fileprivate var numberFormatter: NumberFormatter?
+//
+//    convenience init(numberFormatter: NumberFormatter) {
+//        self.init()
+//        self.numberFormatter = numberFormatter
+//    }
+//
+//    func stringForValue(_ value: Double, entry: ChartDataEntry, dataSetIndex: Int, viewPortHandler: ViewPortHandler?) -> String {
+//        guard let numberFormatter = numberFormatter
+//            else {
+//                return ""
+//        }
+//        return numberFormatter.string(for: value)!
+//    }
+//}

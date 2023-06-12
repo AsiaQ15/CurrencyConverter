@@ -76,6 +76,7 @@ private extension DetailsViewController {
             make.right.equalToSuperview().inset(10)
             make.bottom.equalToSuperview().inset(50)
         }
+        self.updateChart()
         
      //   setShadow()
         
