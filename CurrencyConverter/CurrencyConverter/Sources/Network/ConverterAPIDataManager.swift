@@ -27,7 +27,6 @@ final class ConverterAPIDataManager {
         case .actualPrice: url = Requests.udateCost + url
         case .historical: url = Requests.historicalData + url
         }
-        print(url)
         self.fetchApiData(urlString: url, completion: completion)
     }
     

@@ -49,12 +49,18 @@ final class DetailsViewController: UIViewController {
         self.navigationItem.title = name
     }
     
-    func setChartData(xValues: [String], yValues: [Double], name: String) {
-        self.chartView.setData(xValues: xValues, yValues: yValues, name: name)
+    func setChartData(xValues: [String], yValues: [Double], name: String, coef: Double) {
+        self.chartView.setData(xValues: xValues, yValues: yValues, name: name, coef: coef)
     }
     
     func updateChart() {
+        let coef = self.presenter.getCoefOfChange()
+        self.chartView.updateYValus(coef: coef)
         self.chartView.drawLineChart()
+    }
+    
+    func setButtonHandler(handler: @escaping (() -> Void)) {
+        self.detailsView.setupHandler(handler: handler)
     }
 }
 
@@ -97,12 +103,12 @@ private extension DetailsViewController {
 
 extension DetailsViewController: UITextFieldDelegate {
     
-    // hide key board when the user touches outside keyboard
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
         let newCount = self.presenter.changeSecondCount(value: self.detailsView.getFirstCount())
         self.detailsView.setSecondCount(count: newCount)
+        let coef = self.presenter.getCoefOfChange()
+        self.chartView.updateYValus(coef: coef)
         
     }
     

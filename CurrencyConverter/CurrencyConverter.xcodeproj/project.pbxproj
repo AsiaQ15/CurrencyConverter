@@ -32,6 +32,13 @@
 		2110DEE72A34A96F001B8515 /* historical.json in Resources */ = {isa = PBXBuildFile; fileRef = 2110DEE62A34A96F001B8515 /* historical.json */; };
 		2110DEEA2A34D6C7001B8515 /* NetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2110DEE92A34D6C7001B8515 /* NetworkModel.swift */; };
 		2110DEEC2A34E21E001B8515 /* CurrencyConverterData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2110DEEB2A34E21E001B8515 /* CurrencyConverterData.swift */; };
+		2110DEF12A37295A001B8515 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2110DEF02A37295A001B8515 /* CoreDataStack.swift */; };
+		2110DEF82A372A70001B8515 /* InfoEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2110DEF22A372A70001B8515 /* InfoEntity+CoreDataClass.swift */; };
+		2110DEF92A372A70001B8515 /* InfoEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2110DEF32A372A70001B8515 /* InfoEntity+CoreDataProperties.swift */; };
+		2110DEFA2A372A70001B8515 /* ActualCostEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2110DEF42A372A70001B8515 /* ActualCostEntity+CoreDataClass.swift */; };
+		2110DEFB2A372A70001B8515 /* ActualCostEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2110DEF52A372A70001B8515 /* ActualCostEntity+CoreDataProperties.swift */; };
+		2110DEFC2A372A70001B8515 /* HistoricalCostEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2110DEF62A372A70001B8515 /* HistoricalCostEntity+CoreDataClass.swift */; };
+		2110DEFD2A372A70001B8515 /* HistoricalCostEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2110DEF72A372A70001B8515 /* HistoricalCostEntity+CoreDataProperties.swift */; };
 		212059092A32480A0083B541 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 212059082A32480A0083B541 /* Charts */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +69,13 @@
 		2110DEE62A34A96F001B8515 /* historical.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = historical.json; sourceTree = "<group>"; };
 		2110DEE92A34D6C7001B8515 /* NetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkModel.swift; sourceTree = "<group>"; };
 		2110DEEB2A34E21E001B8515 /* CurrencyConverterData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterData.swift; sourceTree = "<group>"; };
+		2110DEF02A37295A001B8515 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		2110DEF22A372A70001B8515 /* InfoEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InfoEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		2110DEF32A372A70001B8515 /* InfoEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InfoEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2110DEF42A372A70001B8515 /* ActualCostEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActualCostEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		2110DEF52A372A70001B8515 /* ActualCostEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActualCostEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2110DEF62A372A70001B8515 /* HistoricalCostEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistoricalCostEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		2110DEF72A372A70001B8515 /* HistoricalCostEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistoricalCostEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +134,7 @@
 		2109F2282A2C972700602C6B /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				2110DEEF2A37293D001B8515 /* CoreData */,
 				2109F22A2A2C974D00602C6B /* MainScreen */,
 				2109F23C2A2F9CC000602C6B /* Details */,
 				2110DEE82A34CC6B001B8515 /* Network */,
@@ -171,6 +186,20 @@
 				2110DEDD2A3463B1001B8515 /* ConverterAPIDataManager.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		2110DEEF2A37293D001B8515 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				2110DEF02A37295A001B8515 /* CoreDataStack.swift */,
+				2110DEF22A372A70001B8515 /* InfoEntity+CoreDataClass.swift */,
+				2110DEF32A372A70001B8515 /* InfoEntity+CoreDataProperties.swift */,
+				2110DEF42A372A70001B8515 /* ActualCostEntity+CoreDataClass.swift */,
+				2110DEF52A372A70001B8515 /* ActualCostEntity+CoreDataProperties.swift */,
+				2110DEF62A372A70001B8515 /* HistoricalCostEntity+CoreDataClass.swift */,
+				2110DEF72A372A70001B8515 /* HistoricalCostEntity+CoreDataProperties.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -253,23 +282,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2110DEF12A37295A001B8515 /* CoreDataStack.swift in Sources */,
 				2109F22C2A2C97D900602C6B /* MainScreenTableViewController.swift in Sources */,
+				2110DEFB2A372A70001B8515 /* ActualCostEntity+CoreDataProperties.swift in Sources */,
 				2109F23E2A2F9CF800602C6B /* DetailsViewController.swift in Sources */,
 				2109F21B2A2C934500602C6B /* CurrencyConverter.xcdatamodeld in Sources */,
+				2110DEFC2A372A70001B8515 /* HistoricalCostEntity+CoreDataClass.swift in Sources */,
 				2110DEEC2A34E21E001B8515 /* CurrencyConverterData.swift in Sources */,
 				2109F2112A2C934500602C6B /* AppDelegate.swift in Sources */,
 				2110DEEA2A34D6C7001B8515 /* NetworkModel.swift in Sources */,
 				2109F22E2A2C97FB00602C6B /* MainScreenTableView.swift in Sources */,
 				2109F24B2A2FDA1200602C6B /* CoordinatingController.swift in Sources */,
 				2109F2412A2F9D1700602C6B /* DetailsView.swift in Sources */,
+				2110DEF82A372A70001B8515 /* InfoEntity+CoreDataClass.swift in Sources */,
 				2109F2392A2CAA2300602C6B /* FontSettings.swift in Sources */,
+				2110DEF92A372A70001B8515 /* InfoEntity+CoreDataProperties.swift in Sources */,
 				2109F2472A2F9E8500602C6B /* DetailsChartView.swift in Sources */,
 				2109F2132A2C934500602C6B /* SceneDelegate.swift in Sources */,
 				2109F2342A2CA83500602C6B /* Color.swift in Sources */,
 				2109F2432A2F9D7A00602C6B /* DetailsPresenter.swift in Sources */,
 				2109F2492A2FD9F300602C6B /* FlowController.swift in Sources */,
 				2109F2452A2F9D8900602C6B /* DetailsData.swift in Sources */,
+				2110DEFA2A372A70001B8515 /* ActualCostEntity+CoreDataClass.swift in Sources */,
 				2109F2322A2C988500602C6B /* MainScreenModel.swift in Sources */,
+				2110DEFD2A372A70001B8515 /* HistoricalCostEntity+CoreDataProperties.swift in Sources */,
 				2109F2302A2C986B00602C6B /* MainScreenTableViewCell.swift in Sources */,
 				2109F23B2A2E538100602C6B /* MainScreenPresenter.swift in Sources */,
 				2110DEDE2A3463B1001B8515 /* ConverterAPIDataManager.swift in Sources */,

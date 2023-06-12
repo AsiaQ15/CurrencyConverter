@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         //let totaldata = CurrencyConverterData()
         
         let currencyData = MainScreenModel()
-        currencyData.setData(CurrencyConverterData.data.dataForMainScreen(mainCurrency: "RUB"))
+        currencyData.setData(CurrencyConverterData.data.getDataForMainScreen(mainCurrency: "RUB"))
  
         let presenter = MainScreenPresenter(model: currencyData, presenter: presenterDetails)
         let viewController = MainScreenTableViewController(presenter: presenter)
@@ -50,7 +50,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {}
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+        AppDelegate.sharedAppDelegate.coreDataStack.saveContext()
     }
 
 

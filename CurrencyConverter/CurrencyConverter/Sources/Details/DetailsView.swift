@@ -20,6 +20,9 @@ final class DetailsView: UIView {
     private var secondLabelCost = UILabel()
     private var secondCount = UITextField()
     
+    private var button = UIButton()
+    private var buttonHandler: (() -> Void)?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.configuration()
@@ -58,10 +61,14 @@ final class DetailsView: UIView {
         self.firstCount.text ?? "0"
     }
     
-    func test() {
-        self.firstCount.becomeFirstResponder()
+    func setupHandler(handler: @escaping (() -> Void)) {
+        self.buttonHandler = handler
     }
-
+    
+    @objc func buttomAction(sender: UIButton) {
+        guard let action = self.buttonHandler else { return }
+        action()
+    }
 
 }
 
@@ -92,7 +99,7 @@ private extension DetailsView {
         makeLabelName(label: &self.firstLabelName)
         self.firstLabelName.snp.makeConstraints { make in
             make.top.equalTo(self.firstImage.snp.top)
-            make.left.equalTo(self.firstImage.snp.right).offset(Constants.Spacing.small)
+            make.left.equalTo(self.firstImage.snp.right).offset(Constants.Spacing.medium)
             make.right.equalTo(self.firstCount.snp.left)
             make.height.equalTo(Constants.heightLabel)
         }
@@ -101,7 +108,7 @@ private extension DetailsView {
         makeLabelCost(label: &self.firstLabelCost)
         self.firstLabelCost.snp.makeConstraints { make in
             make.top.equalTo(self.firstLabelName.snp.bottom)
-            make.left.equalTo(self.firstImage.snp.right).offset(Constants.Spacing.small)
+            make.left.equalTo(self.firstImage.snp.right).offset(Constants.Spacing.medium)
             make.right.equalTo(self.firstCount.snp.left)
             make.height.equalTo(Constants.heightLabel)
         }
@@ -129,7 +136,7 @@ private extension DetailsView {
         makeLabelName(label: &self.secondLabelName)
         self.secondLabelName.snp.makeConstraints { make in
             make.top.equalTo(self.secondImage.snp.top)
-            make.left.equalTo(self.secondImage.snp.right).offset(Constants.Spacing.small)
+            make.left.equalTo(self.secondImage.snp.right).offset(Constants.Spacing.medium)
             make.right.equalTo(self.secondCount.snp.left)
             make.height.equalTo(Constants.heightLabel)
         }
@@ -138,13 +145,21 @@ private extension DetailsView {
         makeLabelCost(label: &self.secondLabelCost)
         self.secondLabelCost.snp.makeConstraints { make in
             make.top.equalTo(self.secondLabelName.snp.bottom)
-            make.left.equalTo(self.secondImage.snp.right).offset(Constants.Spacing.small)
+            make.left.equalTo(self.secondImage.snp.right).offset(Constants.Spacing.medium)
             make.right.equalTo(self.secondCount.snp.left)//inset(Constants.Spacing.small)
             make.height.equalTo(Constants.heightLabel)
         }
+        
+        self.addSubview(self.button)
+        makeButton(button: &self.button)
+        self.button.snp.makeConstraints { make in
+            make.height.equalTo(Constants.heightbutton)
+            make.width.equalTo(Constants.withbutton)
+            make.centerX.equalTo(self.firstCount.snp.centerX)
+            make.top.equalTo(self.firstCount.snp.bottom).offset(Constants.Spacing.small)
+        }
 
     }
-    
     
     private func makeLabelName(label: inout UILabel) {
         label.backgroundColor = Constants.Label.backgroundColor
@@ -176,6 +191,14 @@ private extension DetailsView {
         text.keyboardType = .decimalPad
     }
     
+    private func makeButton(button: inout UIButton) {
+        button.setImage(Constants.Button.image, for: .normal)
+        button.contentHorizontalAlignment = Constants.Button.contentHorizontalAlignment
+        button.contentVerticalAlignment = Constants.Button.contentVerticalAlignment
+        button.imageView?.contentMode = Constants.Button.imageViewContentMode
+        button.addTarget(self, action: #selector(self.buttomAction(sender:)), for: .touchUpInside)
+    }
+    
     private func setShadow() {
         self.layer.cornerRadius = 8
         self.layer.borderWidth = 1
@@ -192,20 +215,20 @@ private extension DetailsView {
 
 private enum Constants {
     enum Spacing {
-        static let small = 10
+        static let small = 5
+        static let medium = 10
         static let large = 50
     }
-//
-//    enum View {
-//        static let backgroundColor = UIColor.lightGray
-//    }
-//
-//    enum Button {
-//        static let contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.fill
-//        static let contentVerticalAlignment = UIControl.ContentVerticalAlignment.fill
-//        static let imageViewContentMode = UIView.ContentMode.scaleAspectFill
-//    }
-//
+    
+    enum Button {
+        static let image = UIImage(systemName: "repeat")
+//        static let backgroundColor = UIColor.green
+        static let contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.fill
+        static let contentVerticalAlignment = UIControl.ContentVerticalAlignment.fill
+        static let imageViewContentMode = UIView.ContentMode.scaleAspectFill
+//        //static let text = "Загрузить"
+//        static let content = UIControl.ContentHorizontalAlignment.center
+    }
     enum Label {
         static let backgroundColor = UIColor.white
         static let numberOfLines = 0
@@ -222,7 +245,6 @@ private enum Constants {
     }
 
     static let topInset = 20
-   // static let bottomInset = 10
     static let leftInset = 10
     static let rightInset = 10
 
@@ -230,6 +252,8 @@ private enum Constants {
     static let heightLabel = 25
     static let heightTextField = 50
     static let withTextField = 100
+    static let withbutton = 40
+    static let heightbutton = 40
     
 }
 

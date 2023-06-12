@@ -57,7 +57,6 @@ final class MainScreenPresenter: PMainScreenPresenter {
     func openDetails(index: Int) {
         if let viewController = detailsPresnter.getVC() {
             let dataForDetail = CurrencyConverterData.data.getDataForDetails(firstCurrency: self.model.getMainCurrency(), secondCurrency: self.getData(id: index).name)
-            print(dataForDetail)
             detailsPresnter.setData(first: dataForDetail.0, second: dataForDetail.1, chartData: dataForDetail.2)
             mainSreenView?.navigationController?.pushViewController(viewController, animated: true)
         }
@@ -79,8 +78,9 @@ final class MainScreenPresenter: PMainScreenPresenter {
                         CurrencyConverterData.data.updateCost(pair: pair, newCost: newCost )
                     }
                 }
-                self.model.setData(CurrencyConverterData.data.dataForMainScreen(mainCurrency: "RUB"))
+                self.model.setData(CurrencyConverterData.data.getDataForMainScreen(mainCurrency: "RUB"))
                 self.mainSreenView?.reloadData()
+                CurrencyConverterData.data.saveData()
             }
         }
         
@@ -95,8 +95,11 @@ final class MainScreenPresenter: PMainScreenPresenter {
                     CurrencyConverterData.data.updateHistoricalData(pair: pair, data: historicalData)
 
                 }
+                CurrencyConverterData.data.saveData()
             }
         }
+        
+       
 
     }
     

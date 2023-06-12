@@ -15,6 +15,8 @@ final class DetailsChartView: UIView {
     private var xValues = ["x1","x2","x3","x4","x5","x6","x7","x8","x9","x10","x11","x12"]
     private var yValues: [Double] = [32 ,425 ,300 ,150.0000001 ,200.234,178.999,78,90,50,10,100,115]
     private var labelName = "RUB/EUR"
+    private var value = 1.0
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,50 +34,55 @@ final class DetailsChartView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setData(xValues: [String], yValues: [Double], name: String) {
+    func setData(xValues: [String], yValues: [Double], name: String, coef: Double) {
         self.xValues = xValues
         self.yValues = yValues
         self.labelName = name
+    }
+    
+    func updateYValus(coef: Double) {
+        self.value = coef
+        print("coef \(coef)")
+        //self.yValues = self.yValues.map{ $0 * coef}
+        //lineChartView.data?.notifyDataChanged()
+        //lineChartView.notifyDataSetChanged()
+        self.setCghart()
+        self.drawLineChart()
+   
         
-        print(self.xValues)
-        print(self.yValues)
     }
     
     func drawLineChart() {
         setCghart()
-        let max_val = yValues.max() ?? 0
-        let min_val = yValues.min() ?? 0
+        let yValuesCoef = yValues.map{self.value * $0 }
       
-        
-        
-
+        let max_val = yValuesCoef.max() ?? 0
+        let min_val = yValuesCoef.min() ?? 0
+      
         removeLimitLine()
+//        LineChartData newData = new LineChartData(chart.getLineChartData());
+//        newData.getLines().clear();
+//        chart.setLineChartData(newData);
         
-        self.addLimitLine(max_val, "\(max_val)", UIColor.red)
-        self.addLimitLine(min_val, "\(min_val)", UIColor.green)
+        self.addLimitLine(max_val, "\( round(10000 * (max_val)) / 10000)", UIColor.red)
+        self.addLimitLine(min_val, "\(round(10000 * (min_val)) / 10000)", UIColor.systemGreen)
 
         lineChartView.xAxis.valueFormatter = VDChartAxisValueFormatter.init(xValues as NSArray)
-        lineChartView.leftAxis.valueFormatter = VDChartAxisValueFormatter.init()
+        //lineChartView.leftAxis.valueFormatter = VDChartAxisValueFormatter.init()
         
         var yDataArray1 = [ChartDataEntry]()
+        guard xValues.count > 0 else {return}
         for i in 0...xValues.count-1 {
-            let entry = ChartDataEntry.init(x: Double(i), y: Double(yValues[i]))
+            let entry = ChartDataEntry.init(x: Double(i), y: Double(yValuesCoef[i]))
             yDataArray1.append(entry)
         }
-        
+        print(yDataArray1)
         let set1 = LineChartDataSet.init(entries: yDataArray1, label: labelName)
         set1.colors = [UIColor.darkGray]
         set1.drawCirclesEnabled = false
         set1.lineWidth = 1.0
         set1.valueFormatter = DefaultValueFormatter(decimals: 2)
         let data = LineChartData.init(dataSets: [set1])
-        
-     
-        
-
-        
-//        lineChartView.data?.notifyDataChanged()
-//        lineChartView.notifyDataSetChanged()
         
         let leftAxis = self.lineChartView.leftAxis
 //        leftAxis.axisMaximum = max_val + 1
@@ -88,15 +95,17 @@ final class DetailsChartView: UIView {
 
         leftAxis.valueFormatter = DefaultAxisValueFormatter(formatter: valFormatter)
         
-        
-        
         let xAxis = self.lineChartView.xAxis
-        xAxis.labelCount = xValues.count + 2
+        xAxis.labelCount = xValues.count
         
         lineChartView.data = data
         lineChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0, easingOption: .easeInBack)
+        self.lineChartView.doubleTapToZoomEnabled = false
+        self.lineChartView.scaleXEnabled = false
+        self.lineChartView.scaleYEnabled = false
         
-        
+        lineChartView.fitScreen()
+        lineChartView.isUserInteractionEnabled = false
     }
     
 }
@@ -155,7 +164,7 @@ private extension DetailsChartView {
         xAxis.granularityEnabled = true
         xAxis.labelTextColor = UIColor.black
         xAxis.labelFont = UIFont.systemFont(ofSize: 4.0)
-        xAxis.labelPosition = .bottom
+        xAxis.labelPosition = .bottomInside
         xAxis.gridColor = .lightGray
         xAxis.axisLineColor = UIColor.black
         

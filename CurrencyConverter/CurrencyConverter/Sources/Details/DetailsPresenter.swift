@@ -15,8 +15,10 @@ protocol PDetailsPresenter: AnyObject {
    // func configure(cell: MainScreenTableViewCell, forRow row: Int)
     
     func getVC() -> UIViewController?
-    func setData(first: Currency, second: Currency, chartData: [String : Double])
+    func setData(first: Currency, second: Currency, chartData: ([String],[Double]))
     func changeSecondCount(value: String) -> String
+    func getCoefOfChange() -> Double
+    
     
 }
 
@@ -25,13 +27,14 @@ final class DetailsPresenter: PDetailsPresenter {
     private var detailsView: DetailsViewController?
     private let model = DetailsData()
     
-    func setData(first: Currency, second: Currency, chartData: [String : Double]) {
+    func setData(first: Currency, second: Currency, chartData: ([String],[Double])) {
         model.setData(first: first, second: second, chart: chartData)
         configure()
     }
     
     func setVC(view: DetailsViewController?){
         self.detailsView = view
+        self.detailsView?.setButtonHandler(handler: self.swap)
     }
     
     func configure() {
@@ -41,12 +44,12 @@ final class DetailsPresenter: PDetailsPresenter {
         detailsView?.setFirstCount(count: String(model.getFirstCount()))
         detailsView?.setName(name: model.getScreenName())
         let dataChart = model.getChartData()
-        detailsView?.setChartData(xValues: dataChart.0, yValues: dataChart.1, name: dataChart.2)
+        print(dataChart)
+        detailsView?.setChartData(xValues: dataChart.0, yValues: dataChart.1, name: dataChart.2, coef: dataChart.3)
         detailsView?.updateChart()
     }
     
     func getVC() -> UIViewController? {
-        //print(self.detailsView ?? 0)
         return self.detailsView
     }
     
@@ -54,6 +57,14 @@ final class DetailsPresenter: PDetailsPresenter {
         String(model.getNewSecondCout(value: Double(value) ?? 0))
     }
     
+    func getCoefOfChange() -> Double {
+        model.getCoef()
+    }
+    
+    func swap() {
+        model.swap()
+        configure()
+    }
 //
 //    var numberOfCurrency: Int {
 //        return model.currencyCount()
