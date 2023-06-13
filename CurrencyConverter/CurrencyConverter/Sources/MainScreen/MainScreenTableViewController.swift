@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainScreenTableViewController: UIViewController {
+final class MainScreenTableViewController: UIViewController {
     
     private var presenter: PMainScreenPresenter
     private let tableView: MainScreenTableView

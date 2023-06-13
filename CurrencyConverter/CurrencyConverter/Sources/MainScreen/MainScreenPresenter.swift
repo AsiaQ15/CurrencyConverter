@@ -19,24 +19,22 @@ protocol PMainScreenPresenter: AnyObject {
 
 final class MainScreenPresenter: PMainScreenPresenter {
     
-    private weak var mainSreenView: MainScreenTableViewController?
+    private var mainSreenView: MainScreenTableViewController?
     private let model: MainScreenModel
-    private var detailsPresnter: PDetailsPresenter
+    //private var detailsPresnter: PDetailsPresenter
+    private let coordinatingController: CoordinatingController
     
     var numberOfCurrency: Int {
         return model.currencyCount()
     }
     
-    init(model: MainScreenModel, presenter: PDetailsPresenter) {
+    init(model: MainScreenModel, coordinatingController: CoordinatingController) {
         self.model = model
-        self.detailsPresnter = presenter
+        self.coordinatingController = coordinatingController
+       // self.detailsPresnter = presenter
     }
     
-    func setVC(view: MainScreenTableViewController?){
-        self.mainSreenView = view
-        self.mainSreenView?.setupHandler(handler: self.updateData)
-    }
-    
+
 //    func setNextPresenter(presenter: PDetailsPresenter?){
 //        self.detailsPresnter = presenter
 //        print(self.detailsPresnter!)
@@ -64,11 +62,14 @@ final class MainScreenPresenter: PMainScreenPresenter {
     }
     
     func openDetails(index: Int) {
-        if let viewController = detailsPresnter.getVC() {
+        
+        //if let viewController = detailsPresnter.getVC() {
             let dataForDetail = CurrencyConverterData.data.getDataForDetails(firstCurrency: self.model.getMainCurrency(), secondCurrency: self.getData(id: index).name)
-            detailsPresnter.setData(first: dataForDetail.0, second: dataForDetail.1, chartData: dataForDetail.2)
-            mainSreenView?.navigationController?.pushViewController(viewController, animated: true)
-        }
+        
+          //  detailsPresnter.setData(first: dataForDetail.0, second: dataForDetail.1, chartData: dataForDetail.2)
+           // mainSreenView?.navigationController?.pushViewController(viewController, animated: true)
+       // }
+        self.coordinatingController.push(module: .detailsPresenter, parameters: dataForDetail, animated: true)
     }
     
     func updateData() {
@@ -111,6 +112,25 @@ final class MainScreenPresenter: PMainScreenPresenter {
        
 
     }
+    
+}
+
+
+extension MainScreenPresenter: INavigationItem {
+    var vc: UIViewController? {
+        self.mainSreenView
+    }
+    
+    func set<Parameters>(parameters: Parameters) {}
+    
+    func setVC(vc: UIViewController?){
+        guard let vcMainScreen = vc as? MainScreenTableViewController else { return }
+        print("!!!!!")
+        self.mainSreenView = vcMainScreen
+        self.mainSreenView?.setupHandler(handler: self.updateData)
+        print(self.mainSreenView)
+    }
+    
     
 }
 

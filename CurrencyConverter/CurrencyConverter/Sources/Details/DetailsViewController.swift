@@ -14,6 +14,8 @@ final class DetailsViewController: UIViewController {
     private let chartView = DetailsChartView()
     private let presenter: PDetailsPresenter
     
+    
+    
     init(presenter: PDetailsPresenter) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -62,6 +64,7 @@ final class DetailsViewController: UIViewController {
     func setButtonHandler(handler: @escaping (() -> Void)) {
         self.detailsView.setupHandler(handler: handler)
     }
+    
 }
 
 private extension DetailsViewController {
@@ -83,8 +86,6 @@ private extension DetailsViewController {
             make.bottom.equalToSuperview().inset(50)
         }
         self.updateChart()
-        
-     //   setShadow()
         
     }
     

@@ -16,29 +16,38 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        let presenterDetails = DetailsPresenter()
-        let detailsController = DetailsViewController(presenter: presenterDetails)
-        presenterDetails.setVC(view: detailsController)
-        
-        //let totaldata = CurrencyConverterData()
-        
-        let currencyData = MainScreenModel()
-        currencyData.setData(CurrencyConverterData.data.getDataForMainScreen())
- 
-        let presenter = MainScreenPresenter(model: currencyData, presenter: presenterDetails)
-        let viewController = MainScreenTableViewController(presenter: presenter)
-        presenter.setVC(view: viewController)
-        
-//        let apiData = ConverterAPIDataManager()
-//        apiData.updateCost(currancyPair: "RUBEUR")
-//        let price = DataPrice()
-//        price.loadJson2()
-        
-        //presenter.setNextPresenter(presenter: presenterDetails)
-        let navigationController = UINavigationController(rootViewController: viewController)
+        let coordinatingController = CoordinatingController()
+        let flowControl = FlowController(coordinatingController: coordinatingController)
+        print(flowControl.firstPresenter)
+        let viewController = flowControl.firstPresenter.vc
+        print(viewController)
+        let navigationController = UINavigationController(rootViewController: viewController!)
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         
+//        let presenterDetails = DetailsPresenter()
+//        let detailsController = DetailsViewController(presenter: presenterDetails)
+//        presenterDetails.setVC(view: detailsController)
+//
+//        //let totaldata = CurrencyConverterData()
+//
+//        let currencyData = MainScreenModel()
+//        currencyData.setData(CurrencyConverterData.data.getDataForMainScreen())
+//
+//        let presenter = MainScreenPresenter(model: currencyData, presenter: presenterDetails)
+//        let viewController = MainScreenTableViewController(presenter: presenter)
+//        presenter.setVC(view: viewController)
+//
+////        let apiData = ConverterAPIDataManager()
+////        apiData.updateCost(currancyPair: "RUBEUR")
+////        let price = DataPrice()
+////        price.loadJson2()
+//
+//        //presenter.setNextPresenter(presenter: presenterDetails)
+//        let navigationController = UINavigationController(rootViewController: viewController)
+//        window?.rootViewController = navigationController
+//        window?.makeKeyAndVisible()
+//
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {}

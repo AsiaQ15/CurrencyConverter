@@ -26,16 +26,18 @@ final class DetailsPresenter: PDetailsPresenter {
     
     private var detailsView: DetailsViewController?
     private let model = DetailsData()
+    private let coordinatingController: CoordinatingController
+    
+    init( coordinatingController: CoordinatingController) {
+        self.coordinatingController = coordinatingController
+    }
     
     func setData(first: Currency, second: Currency, chartData: ([String],[Double])) {
         model.setData(first: first, second: second, chart: chartData)
         configure()
     }
     
-    func setVC(view: DetailsViewController?){
-        self.detailsView = view
-        self.detailsView?.setButtonHandler(handler: self.swap)
-    }
+    
     
     func configure() {
         detailsView?.setFirst(image: model.getFirstImage(), name: model.getFistName(), cost: model.getFirstCostString())
@@ -65,6 +67,7 @@ final class DetailsPresenter: PDetailsPresenter {
         model.swap()
         configure()
     }
+    
 //
 //    var numberOfCurrency: Int {
 //        return model.currencyCount()
@@ -94,5 +97,28 @@ final class DetailsPresenter: PDetailsPresenter {
 //        //cell.display(author: book.author)
 //        //cell.display(releaseDate: book.releaseDate?.relativeDescription() ?? "Unknown")
 //    }
+    
+}
+
+extension DetailsPresenter: INavigationItem {
+    var vc: UIViewController? {
+        self.detailsView
+    }
+    
+    func set<Parameters>(parameters: Parameters) {
+        guard let data = parameters as? (Currency, Currency, ([String],[Double])) else { return }
+        model.setData(first: data.0, second: data.1, chart: data.2)
+        configure()
+    }
+//    func setData(first: Currency, second: Currency, chartData: ([String],[Double])) {
+//        model.setData(first: first, second: second, chart: chartData)
+//        configure()
+//    }
+    
+    func setVC(vc: UIViewController?) {
+        guard let vcDetails = vc as? DetailsViewController else { return }
+        self.detailsView = vcDetails
+        self.detailsView?.setButtonHandler(handler: self.swap)
+    }
     
 }
