@@ -69,37 +69,24 @@ final class DetailsViewController: UIViewController {
 
 private extension DetailsViewController {
     private func configuration() {
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = Constants.backgroundColor
         self.view.addSubview(self.detailsView)
         self.detailsView.snp.makeConstraints { make in
-            make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(10)
-            make.left.equalToSuperview().inset(10)
-            make.right.equalToSuperview().inset(10)
-            make.height.equalTo(190)
+            make.top.equalTo(self.topLayoutGuide.snp.bottom).offset(Constants.topOffset)
+            make.left.equalToSuperview().inset(Constants.leftInset)
+            make.right.equalToSuperview().inset(Constants.rightInset)
+            make.height.equalTo(Constants.detailsHeight)
         }
         
         self.view.addSubview(self.chartView)
         self.chartView.snp.makeConstraints { make in
-            make.top.equalTo(self.detailsView.snp.bottom).offset(30)
-            make.left.equalToSuperview().inset(10)
-            make.right.equalToSuperview().inset(10)
-            make.bottom.equalToSuperview().inset(50)
+            make.top.equalTo(self.detailsView.snp.bottom).offset(Constants.spaceBetween)
+            make.left.equalToSuperview().inset(Constants.leftInset)
+            make.right.equalToSuperview().inset(Constants.rightInset)
+            make.bottom.equalToSuperview().inset(Constants.bottomInset)
         }
         self.updateChart()
-        
     }
-    
-//    private func setShadow() {
-//        //print(self.)
-//        self.chartView.layer.cornerRadius = 8
-//        self.chartView.layer.borderWidth = 1
-//        self.chartView.layer.borderColor = UIColor.gray.cgColor
-//        self.chartView.layer.shadowOpacity = 0.5
-//        self.chartView.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
-//        self.chartView.layer.shadowRadius = 3.0
-//        self.chartView.layer.shadowColor = UIColor.black.cgColor
-//        self.chartView.layer.masksToBounds = false
-//    }
 }
 
 extension DetailsViewController: UITextFieldDelegate {
@@ -112,22 +99,18 @@ extension DetailsViewController: UITextFieldDelegate {
         self.chartView.updateYValus(coef: coef)
         
     }
+}
+
+private enum Constants {
+    static let backgroundColor = UIColor.systemBackground
     
-    // user presses return key
+    static let leftInset = 10
+    static let rightInset = 10
+    static let topOffset = 10
+    static let spaceBetween = 30
+    static let bottomInset = 50
     
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        self.detailsView.test()
-//        //textField.resignFirstResponder()
-//        return true
-//    }
-    
-//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        if text == "\n" {
-//                   self.textView.resignFirstResponder()
-//                   return false
-//               }
-//               return true
-//            return Int(string) != nil
-//        }
+    static let detailsHeight = 190
     
 }
+

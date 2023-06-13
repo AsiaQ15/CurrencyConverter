@@ -26,7 +26,6 @@ final class DetailsView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.configuration()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -75,8 +74,9 @@ final class DetailsView: UIView {
 private extension DetailsView {
     
     private func configuration() {
-        self.backgroundColor = .white
+        self.backgroundColor = Constants.View.backgroundColor
         self.setShadow()
+        
         self.addSubview(self.firstImage)
         makeImage(image: &self.firstImage)
         self.firstImage.snp.makeConstraints { make in
@@ -158,13 +158,11 @@ private extension DetailsView {
             make.centerX.equalTo(self.firstCount.snp.centerX)
             make.top.equalTo(self.firstCount.snp.bottom).offset(Constants.Spacing.small)
         }
-
     }
     
     private func makeLabelName(label: inout UILabel) {
         label.backgroundColor = Constants.Label.backgroundColor
         label.font = Constants.Label.maintextFont
-        label.textColor = .black
         label.textAlignment = Constants.Label.textAlignment
         label.numberOfLines = Constants.Label.numberOfLines
     }
@@ -172,7 +170,7 @@ private extension DetailsView {
     private func makeLabelCost(label: inout UILabel) {
         label.backgroundColor = Constants.Label.backgroundColor
         label.font = Constants.Label.subtextFont
-        label.textColor = .gray
+        label.textColor =  Constants.Label.textColor
         label.textAlignment = Constants.Label.textAlignment
         label.numberOfLines = Constants.Label.numberOfLines
     }
@@ -181,13 +179,16 @@ private extension DetailsView {
         image.frame = CGRect(x: 0, y: 0, width: Constants.heightImage, height: Constants.heightImage)
         image.layer.cornerRadius = min(image.frame.width, image.frame.height) / 2
         image.layer.masksToBounds = true
+        image.layer.borderWidth = Constants.borderWidth
+        image.layer.borderColor = Constants.borderColor
     }
     
     private func makeTextField(text: inout UITextField) {
         text.textAlignment = Constants.TextField.textAlignment
         text.backgroundColor = Constants.TextField.backgroundColor
         text.font = Constants.TextField.textFont
-        text.borderStyle = .line
+        text.layer.borderColor = Constants.borderColor
+        text.layer.borderWidth = Constants.borderWidth
         text.keyboardType = .decimalPad
     }
     
@@ -200,16 +201,15 @@ private extension DetailsView {
     }
     
     private func setShadow() {
-        self.layer.cornerRadius = 8
-        self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor.gray.cgColor
-        self.layer.shadowOpacity = 0.5
-        self.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
-        self.layer.shadowRadius = 3.0
-        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.cornerRadius = Constants.cornerRadius
+        self.layer.borderWidth = Constants.borderWidth
+        self.layer.borderColor = Constants.borderColor
+        self.layer.shadowOpacity = Constants.shadowOpacity
+        self.layer.shadowOffset = Constants.shadowOffset
+        self.layer.shadowRadius = Constants.shadowRadius
+        self.layer.shadowColor = Constants.borderColor
         self.layer.masksToBounds = false
     }
-    
     
 }
 
@@ -220,29 +220,39 @@ private enum Constants {
         static let large = 50
     }
     
+    enum View {
+        static let backgroundColor = UIColor.systemBackground
+    }
+    
     enum Button {
         static let image = UIImage(systemName: "repeat")
-//        static let backgroundColor = UIColor.green
         static let contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.fill
         static let contentVerticalAlignment = UIControl.ContentVerticalAlignment.fill
         static let imageViewContentMode = UIView.ContentMode.scaleAspectFill
-//        //static let text = "Загрузить"
-//        static let content = UIControl.ContentHorizontalAlignment.center
     }
+    
     enum Label {
-        static let backgroundColor = UIColor.white
+        static let backgroundColor = UIColor.systemBackground
         static let numberOfLines = 0
         static let textAlignment = NSTextAlignment.left
         static let subtextFont = Fonts.subText
         static let maintextFont = Fonts.mainText
+        static let textColor = UIColor.systemGray
     }
     
 
     enum TextField {
-        static let backgroundColor = UIColor.white
+        static let backgroundColor = UIColor.systemBackground
         static let textAlignment = NSTextAlignment.center
         static let textFont = Fonts.mainText
     }
+    
+    static let borderColor = UIColor.systemGray2.cgColor
+    static let borderWidth = CGFloat(1)
+    static let cornerRadius = CGFloat(8)
+    static let shadowRadius = CGFloat(3)
+    static let shadowOpacity = Float(0.5)
+    static let shadowOffset = CGSize(width: 1.0, height: 1.0)
 
     static let topInset = 20
     static let leftInset = 10

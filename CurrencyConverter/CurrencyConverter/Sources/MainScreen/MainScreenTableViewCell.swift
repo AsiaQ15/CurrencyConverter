@@ -113,14 +113,14 @@ private enum Constants {
     
     enum LabelName {
         static let backgroundColor = UIColor.systemBackground
-        static let textFont = UIFont.preferredFont(forTextStyle: .title3)
+        static let textFont = Fonts.mainText
         static let textAlignment = NSTextAlignment.center
     }
     
     enum LabelCost {
         static let backgroundColor = UIColor.systemBackground
         static let textColor = UIColor.systemBlue
-        static let textFont = UIFont.preferredFont(forTextStyle: .title3)
+        static let textFont = Fonts.title3
     }
     
     enum Image {
