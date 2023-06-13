@@ -13,6 +13,7 @@ protocol PMainScreenPresenter: AnyObject {
     
     func configure(cell: MainScreenTableViewCell, forRow row: Int)
     func openDetails(index: Int)
+    func changeMainCurrency(index: Int)
     
 }
 
@@ -40,6 +41,14 @@ final class MainScreenPresenter: PMainScreenPresenter {
 //        self.detailsPresnter = presenter
 //        print(self.detailsPresnter!)
 //    }
+    
+    func changeMainCurrency(index: Int) {
+        model.changeMainCurrency(index: index)
+        let mainName = model.getMainCurrency()
+        CurrencyConverterData.data.changeMainCurrency(currency: mainName)
+        self.model.setData(CurrencyConverterData.data.getDataForMainScreen())
+        self.mainSreenView?.reloadData()
+    }
 
     func getData(id: Int) -> Currency {
         self.model.getData(id)
@@ -78,7 +87,7 @@ final class MainScreenPresenter: PMainScreenPresenter {
                         CurrencyConverterData.data.updateCost(pair: pair, newCost: newCost )
                     }
                 }
-                self.model.setData(CurrencyConverterData.data.getDataForMainScreen(mainCurrency: "RUB"))
+                self.model.setData(CurrencyConverterData.data.getDataForMainScreen())
                 self.mainSreenView?.reloadData()
                 CurrencyConverterData.data.saveData()
             }

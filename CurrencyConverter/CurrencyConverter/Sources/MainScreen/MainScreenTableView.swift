@@ -14,7 +14,8 @@ final class MainScreenTableView: UITableView {
     //private let currency: CurrencyData
     //private let currencyArray = [Currency]()
     private var presenter: PMainScreenPresenter
-    private var handler: ((Int) -> Void)?
+    private var tapHandler: ((Int) -> Void)?
+    private var changeHandler: ((Int) -> Void)?
     
     init(presenter:  PMainScreenPresenter) {
         self.presenter = presenter
@@ -28,8 +29,12 @@ final class MainScreenTableView: UITableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup(handler: @escaping ((Int) -> Void)) {
-        self.handler = handler
+    func setup(taphandler: @escaping ((Int) -> Void)) {
+        self.tapHandler = taphandler
+    }
+    
+    func setup(changehandler: @escaping ((Int) -> Void)) {
+        self.changeHandler = changehandler
     }
     
 //    func addNewData(_ url: String) -> Int {
@@ -72,7 +77,17 @@ extension MainScreenTableView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row != 0 {
-            self.handler?(indexPath.row)
+            self.tapHandler?(indexPath.row)
         }
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let actionDelete = UIContextualAction(style: .normal, title: "Сделать основным") { _,_,_ in
+//            self.notes.remove(at: indexPath.row)
+//            tableView.reloadData()
+            self.changeHandler?(indexPath.row)
+        }
+        let actions = UISwipeActionsConfiguration(actions: [actionDelete])
+        return actions
     }
 }

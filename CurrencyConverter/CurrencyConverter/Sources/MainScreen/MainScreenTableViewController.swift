@@ -25,9 +25,8 @@ class MainScreenTableViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-            self.tableView.setup{index in
-                self.presenter.openDetails(index: index)
-            }
+        self.tableView.setup(taphandler: self.presenter.openDetails(index:))
+        self.tableView.setup(changehandler: self.presenter.changeMainCurrency(index:))
 //        self.recipeView.setup { index in
 //            self.coordinatingController.push(module: .recipeDetailsVC, parameters: self.data.recipes[index], animated: true)
 //        }

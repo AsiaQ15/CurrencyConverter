@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         //let totaldata = CurrencyConverterData()
         
         let currencyData = MainScreenModel()
-        currencyData.setData(CurrencyConverterData.data.getDataForMainScreen(mainCurrency: "RUB"))
+        currencyData.setData(CurrencyConverterData.data.getDataForMainScreen())
  
         let presenter = MainScreenPresenter(model: currencyData, presenter: presenterDetails)
         let viewController = MainScreenTableViewController(presenter: presenter)

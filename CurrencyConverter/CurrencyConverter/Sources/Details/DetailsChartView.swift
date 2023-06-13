@@ -42,7 +42,7 @@ final class DetailsChartView: UIView {
     
     func updateYValus(coef: Double) {
         self.value = coef
-        print("coef \(coef)")
+        
         //self.yValues = self.yValues.map{ $0 * coef}
         //lineChartView.data?.notifyDataChanged()
         //lineChartView.notifyDataSetChanged()
@@ -76,7 +76,6 @@ final class DetailsChartView: UIView {
             let entry = ChartDataEntry.init(x: Double(i), y: Double(yValuesCoef[i]))
             yDataArray1.append(entry)
         }
-        print(yDataArray1)
         let set1 = LineChartDataSet.init(entries: yDataArray1, label: labelName)
         set1.colors = [UIColor.darkGray]
         set1.drawCirclesEnabled = false
