@@ -60,24 +60,6 @@ extension CoordinatingController: ICoordinatingController {
         self.modulesStack.append(nextModule)
         print(modulesStack)
     }
-//    
-//    func present<Parameters>(module: NavigationModule, parameters: Parameters, animated: Bool) {
-//        guard let nextModule = self.modules[module] else {
-//            assertionFailure("Модуль не зарегистрирован")
-//            return
-//        }
-//
-//        if self.modulesStack.last?.vc == nextModule.vc {
-//            self.modulesStack.removeLast()
-//        }
-//
-//        nextModule.set(parameters: parameters)
-//        
-//        let navigationController = self.modulesStack.last?.vc.navigationController
-//        navigationController?.present(nextModule.vc, animated: animated)
-//        self.modulesStack.append(nextModule)
-//        
-//    }
     
     func back(animated: Bool) {
         let last = self.modulesStack.popLast()
@@ -90,3 +72,4 @@ extension CoordinatingController: ICoordinatingController {
     }
 
 }
+

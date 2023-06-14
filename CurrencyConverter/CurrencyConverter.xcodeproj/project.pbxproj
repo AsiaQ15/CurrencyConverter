@@ -109,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				2109F2272A2C971D00602C6B /* App */,
+				2110DF032A3A4C1F001B8515 /* Coordinator */,
 				2109F2282A2C972700602C6B /* Sources */,
 				2109F2292A2C973300602C6B /* Resources */,
 				2109F2382A2CAA2300602C6B /* FontSettings.swift */,
@@ -122,8 +123,6 @@
 			children = (
 				2109F2122A2C934500602C6B /* SceneDelegate.swift */,
 				2109F2102A2C934500602C6B /* AppDelegate.swift */,
-				2109F2482A2FD9F300602C6B /* FlowController.swift */,
-				2109F24A2A2FDA1200602C6B /* CoordinatingController.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -205,6 +204,15 @@
 				2110DF012A3A0C6E001B8515 /* DataManger.swift */,
 			);
 			path = DataManager;
+			sourceTree = "<group>";
+		};
+		2110DF032A3A4C1F001B8515 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				2109F2482A2FD9F300602C6B /* FlowController.swift */,
+				2109F24A2A2FDA1200602C6B /* CoordinatingController.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

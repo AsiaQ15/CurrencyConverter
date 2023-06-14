@@ -7,6 +7,7 @@
 import Foundation
 
 final class FlowController {
+    
     let firstPresenter: INavigationItem
 
     private let coordinatingController: CoordinatingController
@@ -32,12 +33,9 @@ final class FlowController {
 
 extension FlowController {
     func makeDetailPtesente() -> INavigationItem {
-        
         let presenterDetails = DetailsPresenter(coordinatingController: coordinatingController)
         let detailsController = DetailsViewController(presenter: presenterDetails)
         presenterDetails.setVC(vc: detailsController)
-        
-        //let vc = DetailsViewController(coordinatingController: coordinatingController)
         self.coordinatingController.register(module: .detailsPresenter, navItem: presenterDetails)
         
         return presenterDetails

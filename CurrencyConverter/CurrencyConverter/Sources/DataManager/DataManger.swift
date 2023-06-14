@@ -22,9 +22,7 @@ final class DataManager {
     
     func saveDataInStorage(currencies: [CurrencyStorage]) {
         for currency in currencies {
-            //let info = CurrencyList(nameShort: currency.nameShort, nameFull: currency.nameFull, photo: currency.photo)
             let coreDataStack = AppDelegate.sharedAppDelegate.coreDataStack
-            //InfoEntity.createOrUpdate(data: info, with: coreDataStack)
             for actualCost in currency.lastCost {
                 let cost = CurrencyActual(currency1: currency.nameShort, currency2: actualCost.key, cost: actualCost.value)
                 ActualCostEntity.createOrUpdate(data: cost, with: coreDataStack)
@@ -53,23 +51,9 @@ final class DataManager {
         AppDelegate.sharedAppDelegate.coreDataStack.saveContext()
     }
     
-
 }
 
 private extension DataManager {
-    private func infoEntityIsEmpty() -> Bool {
-        let context = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
-        let infoRequest: NSFetchRequest<InfoEntity> = InfoEntity.fetchRequest()
-        do {
-            let savedData = try context.fetch(infoRequest)
-            guard savedData.isEmpty else { return false}
-            return true
-        } catch {
-            print(error.localizedDescription)
-            return true
-        }
-    }
-    
     private func getCurrency() -> [CurrencyList] {
         let path = Bundle.main.path(forResource: "CurrencyList", ofType: "plist")
         let data = try! Data(contentsOf: URL.init(fileURLWithPath: path!))
@@ -144,5 +128,5 @@ private extension DataManager {
         return currencyInfo
     }
     
-    
 }
+
