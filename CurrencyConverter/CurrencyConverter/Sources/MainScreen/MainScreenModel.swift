@@ -17,20 +17,10 @@ struct Currency {
 
 final class MainScreenModel {
     private var currencies = [Currency]()
-    private var mainCurrency = "RUB"
-    
-    init() {
-        //self.addData()
-    }
+    private var mainCurrency = ""
     
     func currencyCount() -> Int {
         self.currencies.count
-    }
-    
-    func addData() {
-        currencies.append(Currency(name: "RUB",nameFull: "Российский рубль", cost: 1.0, photo: UIImage(imageLiteralResourceName: "RUB.jpg") ))
-        currencies.append(Currency(name: "USD",nameFull: "Евро", cost: 88.88, photo: UIImage(imageLiteralResourceName: "USD.jpg") ))
-        currencies.append(Currency(name: "EUR",nameFull: "Доллар США", cost: 87.10, photo: UIImage(imageLiteralResourceName: "EUR.jpg") ))
     }
     
     func getData(_ id: Int) -> Currency {
@@ -57,5 +47,4 @@ final class MainScreenModel {
         self.mainCurrency = reserv.name
     }
 }
-
 

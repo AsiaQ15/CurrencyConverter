@@ -10,7 +10,7 @@ final class FlowController {
     
     let firstPresenter: INavigationItem
 
-    private let coordinatingController: CoordinatingController
+    private let coordinatingController: ICoordinatingController
     private var modules = [INavigationItem]()
     
     init(coordinatingController: CoordinatingController) {
@@ -21,7 +21,7 @@ final class FlowController {
         let currencyData = MainScreenModel()
         currencyData.setData(CurrencyConverterData.data.getDataForMainScreen())
         self.firstPresenter = MainScreenPresenter(model: currencyData, coordinatingController: coordinatingController)
-        let viewController = MainScreenTableViewController(presenter: firstPresenter as! PMainScreenPresenter)
+        let viewController = MainScreenTableViewController(presenter: firstPresenter as! IMainScreenPresenter)
         firstPresenter.setVC(vc: viewController)
         print(viewController)
         

@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol PMainScreenPresenter: AnyObject {
+protocol IMainScreenPresenter: AnyObject {
     
     var numberOfCurrency: Int {get}
     
@@ -17,28 +17,20 @@ protocol PMainScreenPresenter: AnyObject {
     
 }
 
-final class MainScreenPresenter: PMainScreenPresenter {
+final class MainScreenPresenter: IMainScreenPresenter {
     
     private var mainSreenView: MainScreenTableViewController?
     private let model: MainScreenModel
-    //private var detailsPresnter: PDetailsPresenter
-    private let coordinatingController: CoordinatingController
+    private let coordinatingController: ICoordinatingController
     
     var numberOfCurrency: Int {
         return model.currencyCount()
     }
     
-    init(model: MainScreenModel, coordinatingController: CoordinatingController) {
+    init(model: MainScreenModel, coordinatingController: ICoordinatingController) {
         self.model = model
         self.coordinatingController = coordinatingController
-       // self.detailsPresnter = presenter
     }
-    
-
-//    func setNextPresenter(presenter: PDetailsPresenter?){
-//        self.detailsPresnter = presenter
-//        print(self.detailsPresnter!)
-//    }
     
     func changeMainCurrency(index: Int) {
         model.changeMainCurrency(index: index)
@@ -54,21 +46,15 @@ final class MainScreenPresenter: PMainScreenPresenter {
     
     func configure(cell: MainScreenTableViewCell, forRow row: Int) {
         let currency = model.getData(row)
-        
         cell.displayName(name: currency.nameFull)
-        let cost = " 1 \(self.model.getMainCurrency()) = \(currency.cost) \(currency.name)"
+        let costRound = Double(round(currency.cost * 1000)/1000)
+        let cost = " 1 \(self.model.getMainCurrency()) = \(costRound) \(currency.name)"
         cell.displayCost(cost: cost)
         cell.displayImage(image: currency.photo)
     }
     
     func openDetails(index: Int) {
-        
-        //if let viewController = detailsPresnter.getVC() {
-            let dataForDetail = CurrencyConverterData.data.getDataForDetails(firstCurrency: self.model.getMainCurrency(), secondCurrency: self.getData(id: index).name)
-        
-          //  detailsPresnter.setData(first: dataForDetail.0, second: dataForDetail.1, chartData: dataForDetail.2)
-           // mainSreenView?.navigationController?.pushViewController(viewController, animated: true)
-       // }
+        let dataForDetail = CurrencyConverterData.data.getDataForDetails(firstCurrency: self.model.getMainCurrency(), secondCurrency: self.getData(id: index).name)
         self.coordinatingController.push(module: .detailsPresenter, parameters: dataForDetail, animated: true)
     }
     
@@ -79,7 +65,6 @@ final class MainScreenPresenter: PMainScreenPresenter {
             ConverterAPIDataManager.shared.updateData(currancyPair: pair, type: .actualPrice) { (currencies: [PricePair]?, error: ErrorModel?) in
                 if let error = error {
                     print(error.Message!)
-                    //self.mainSreenView?.showAlertMessage(titleStr: "Error", messageStr: error.Message!)
                 }
                 if currencies?.isEmpty ?? true {
                     print("NO data for pair \(pair)")
@@ -94,12 +79,10 @@ final class MainScreenPresenter: PMainScreenPresenter {
             }
         }
         
-
         for pair in pairs {
             ConverterAPIDataManager.shared.updateData(currancyPair: pair, type: .historical) { (currencies: HistoricalData?, error: ErrorModel?) in
                 if let error = error {
                     print(error.Message!)
-                   // self.mainSreenView?.showAlertMessage(titleStr: "Error", messageStr: error.Message!)
                 }
                 if let historicalData = currencies?.historical {
                     CurrencyConverterData.data.updateHistoricalData(pair: pair, data: historicalData)
@@ -111,7 +94,6 @@ final class MainScreenPresenter: PMainScreenPresenter {
     }
     
 }
-
 
 extension MainScreenPresenter: INavigationItem {
     

@@ -24,6 +24,8 @@ protocol ICoordinatingController: AnyObject{
     
     func back(animated: Bool)
     func push<Parameters>(module: NavigationModule, parameters: Parameters, animated: Bool)
+    func register(module: NavigationModule, navItem: INavigationItem)
+    
 }
 
 final class CoordinatingController {

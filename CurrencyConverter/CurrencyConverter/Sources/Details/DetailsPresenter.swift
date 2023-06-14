@@ -8,27 +8,22 @@
 import Foundation
 import UIKit
 
-protocol PDetailsPresenter: AnyObject {
-    
-    //var numberOfCurrency: Int {get}
-    
-   // func configure(cell: MainScreenTableViewCell, forRow row: Int)
+protocol IDetailsPresenter: AnyObject {
     
     func getVC() -> UIViewController?
     func setData(first: Currency, second: Currency, chartData: ([String],[Double]))
     func changeSecondCount(value: String) -> String
     func getCoefOfChange() -> Double
     
-    
 }
 
-final class DetailsPresenter: PDetailsPresenter {
+final class DetailsPresenter: IDetailsPresenter {
     
     private var detailsView: DetailsViewController?
     private let model = DetailsData()
-    private let coordinatingController: CoordinatingController
+    private let coordinatingController: ICoordinatingController
     
-    init( coordinatingController: CoordinatingController) {
+    init( coordinatingController: ICoordinatingController) {
         self.coordinatingController = coordinatingController
     }
     
@@ -36,8 +31,6 @@ final class DetailsPresenter: PDetailsPresenter {
         model.setData(first: first, second: second, chart: chartData)
         configure()
     }
-    
-    
     
     func configure() {
         detailsView?.setFirst(image: model.getFirstImage(), name: model.getFistName(), cost: model.getFirstCostString())

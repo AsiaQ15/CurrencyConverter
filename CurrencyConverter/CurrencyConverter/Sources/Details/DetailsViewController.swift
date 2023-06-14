@@ -12,11 +12,11 @@ final class DetailsViewController: UIViewController {
     
     private let detailsView = DetailsView()
     private let chartView = DetailsChartView()
-    private let presenter: PDetailsPresenter
+    private let presenter: IDetailsPresenter
     
     
     
-    init(presenter: PDetailsPresenter) {
+    init(presenter: IDetailsPresenter) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
