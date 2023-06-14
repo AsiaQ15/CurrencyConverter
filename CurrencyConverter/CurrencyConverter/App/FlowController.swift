@@ -15,6 +15,8 @@ final class FlowController {
     init(coordinatingController: CoordinatingController) {
         self.coordinatingController = coordinatingController
         
+        CurrencyConverterData.data.loadData()
+        
         let currencyData = MainScreenModel()
         currencyData.setData(CurrencyConverterData.data.getDataForMainScreen())
         self.firstPresenter = MainScreenPresenter(model: currencyData, coordinatingController: coordinatingController)

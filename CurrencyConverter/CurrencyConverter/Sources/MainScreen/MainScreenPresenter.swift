@@ -108,15 +108,13 @@ final class MainScreenPresenter: PMainScreenPresenter {
                 CurrencyConverterData.data.saveData()
             }
         }
-        
-       
-
     }
     
 }
 
 
 extension MainScreenPresenter: INavigationItem {
+    
     var vc: UIViewController? {
         self.mainSreenView
     }
@@ -125,12 +123,9 @@ extension MainScreenPresenter: INavigationItem {
     
     func setVC(vc: UIViewController?){
         guard let vcMainScreen = vc as? MainScreenTableViewController else { return }
-        print("!!!!!")
         self.mainSreenView = vcMainScreen
         self.mainSreenView?.setupHandler(handler: self.updateData)
-        print(self.mainSreenView)
     }
-    
     
 }
 

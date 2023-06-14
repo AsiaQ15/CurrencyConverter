@@ -43,20 +43,26 @@ final class CurrencyConverterData {
     
     static let data = CurrencyConverterData()
     private var currencies = [String : CurrencyStorage]()
-    private let currenciesPairs = ["RUBEUR", "EURRUB", "RUBUSD", "USDRUB", "USDEUR", "EURUSD"]
+    private var currenciesPairs = ["RUBEUR", "EURRUB", "RUBUSD", "USDRUB", "USDEUR", "EURUSD"]
     private var availableCurrencies = [ "RUB" , "USD", "EUR"]
     private var mainCurrency = "RUB"
     
     init() {
         //loadData()
-        self.loadDataFromStorage()
+        //self.loadDataFromStorage()
         //print(currencies["RUB"]?.historicalCost["EUR"])
         //print(currencies["EUR"]?.historicalCost["RUB"])
-        getCurrency()
+        //getCurrency()
+        
+        
 
     }
     
-    private func loadData(){
+    func loadData() {
+        DataManager.dataManager.loadData()
+    }
+    
+    private func loadData1(){
         
         var lastCost = ["RUB" : 1, "EUR" : 0.0072132, "USD" : 0.5]
         var historicalCost = ["RUB": ["2023-05-22" : 1, "2023-05-23" : 1],
@@ -87,7 +93,6 @@ final class CurrencyConverterData {
         let path = Bundle.main.path(forResource: "CurrencyList", ofType: "plist")
         let data = try! Data(contentsOf: URL.init(fileURLWithPath: path!))
         let listArray = try! PropertyListSerialization.propertyList(from: data, options: [], format: nil) as! NSArray
-        let obj = listArray[0] as? [String:Any]
 
         
         var currenciesInfo = [CurrencyStorage]()
@@ -113,6 +118,53 @@ final class CurrencyConverterData {
         //        self.presenter?.fetchedConvertedCurrency(self.returnConverterItemsWithBaseConverter(baseConverterItem:
         //                                                                    }
     }
+    
+    func setCurrencies(infoCurrency: [CurrencyInfo], actualCost: [CurrencyActual], historicalCost: [CurrencyHistorical]) {
+        
+        self.currencies = [String : CurrencyStorage]()
+        self.availableCurrencies = []
+        self.currenciesPairs = []
+        
+        for currency in infoCurrency {
+            let lastCost = [String : Double]()
+            let historicalCost = [String : [String : Double]]()
+            self.currencies[currency.nameShort] = CurrencyStorage(nameShort: currency.nameShort, nameFull: currency.nameFull, photo: currency.photo, lastCost: lastCost, historicalCost: historicalCost)
+            self.availableCurrencies.append(currency.nameShort)
+        }
+        
+        for currency1 in self.availableCurrencies {
+            for currency2 in self.availableCurrencies {
+                if currency2 != currency1 {
+                    self.currenciesPairs.append("\(currency1)\(currency2)")
+                }
+            }
+        }
+        
+        for currencyCost in actualCost {
+            self.currencies[currencyCost.currency1]?.lastCost[currencyCost.currency2] = currencyCost.cost
+           // self.currencies[currencyCost.currency1]?.lastCost[currencyCost.currency1] = 1.0
+        }
+        
+        
+        for currencyHist in historicalCost {
+            let currency1 = currencyHist.currency1
+            let currency2 = currencyHist.currency2
+            let date = currencyHist.date
+            
+            if self.currencies[currency1]?.historicalCost[currency2] == nil {
+                self.currencies[currency1]?.historicalCost[currency2] = [:]
+            }
+            self.currencies[currency1]?.historicalCost[currency2]?[date] = currencyHist.cost
+            
+        }
+        
+        for currency in self.availableCurrencies {
+            self.currencies[currency]?.lastCost[currency] = 1.0
+            
+        }
+            
+    }
+    
     func getDataForMainScreen() -> ([Currency], String) {
         var mainScreenData = [Currency]()
         //let keys = [ "RUB" , "USD", "EUR"]
@@ -332,32 +384,3 @@ private struct SortDate {
 }
 
 
-//func entityIsEmpty(entity: String) -> Bool
-//{
-//
-//    var appDel:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-//    var context = NSManagedObjectContext()
-//
-//    var request = NSFetchRequest(entityName: entity)
-//    var error = NSErrorPointer()
-//
-//    var results:NSArray? = self.context.executeFetchRequest(request, error: error)
-//
-//    if let res = results
-//    {
-//        if res.count == 0
-//        {
-//            return true
-//        }
-//        else
-//        {
-//            return false
-//        }
-//    }
-//    else
-//    {
-//        println("Error: \(error.debugDescription)")
-//        return true
-//    }
-//
-//}
