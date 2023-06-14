@@ -16,43 +16,37 @@ extension InfoEntity {
         return NSFetchRequest<InfoEntity>(entityName: "InfoEntity")
     }
 
-    @NSManaged public var nameShort: String?
-    @NSManaged public var nameFull: String?
-    @NSManaged public var photo: String?
+    @NSManaged public var name: String?
+    @NSManaged public var id: Int32
+    @NSManaged public var isMain: String?
     
     internal class func createOrUpdate(data: CurrencyInfo, with stack: CoreDataStack) {
-        //let pictureID = Int32(item.id)
-        var current: InfoEntity?
-        let currentFetch: NSFetchRequest<InfoEntity> = InfoEntity.fetchRequest()
-
-//        let newItemIDPredicate = NSPredicate(format: "%@ = %i", (\PictureEntity.id)._kvcKeyPathString!, pictureID)
-//        currentPostFetch.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [newItemIDPredicate])
-//
-//        //let request = NSFetchRequest(entityName: "Location")
-        let subPredicate1 = NSPredicate(format: "(nameShort = %@)", data.nameShort)
+        let currencyID = Int32(data.id)
+        var currentInfo: InfoEntity?
+        let currencyPostFetch: NSFetchRequest<InfoEntity> = InfoEntity.fetchRequest()
         
-        currentFetch.predicate = NSCompoundPredicate(type: .and, subpredicates: [subPredicate1])
-
+        let itemIDPredicate = NSPredicate(format: "(id = %i)", currencyID)
         
+        currencyPostFetch.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [itemIDPredicate])
+
         do {
-            let results = try stack.managedContext.fetch(currentFetch)
+            let results = try stack.managedContext.fetch(currencyPostFetch)
             if results.isEmpty {
-                current = InfoEntity(context: stack.managedContext)
-                current?.nameShort = data.nameShort
+                currentInfo = InfoEntity(context: stack.managedContext)
+                currentInfo?.id = Int32(currencyID)
             } else {
-                current = results.first
+                currentInfo = results.first
             }
-            current?.update(data: data)
+            currentInfo?.update(data: data)
         } catch let error as NSError {
             print("Fetch error: \(error) description: \(error.userInfo)")
         }
-        //print(current)
     }
-
+    
     internal func update(data: CurrencyInfo) {
-        self.nameShort = data.nameShort
-        self.nameFull = data.nameFull
-        self.photo = data.photo
+        self.id = data.id
+        self.name = data.name
+        self.isMain = String(data.isMain)
     }
 
 }

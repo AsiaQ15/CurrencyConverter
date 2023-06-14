@@ -18,10 +18,17 @@ struct CurrencyStorage {
     var historicalCost: [String : [String : Double]] // // [Currency : [Date : Cost]]
     
 }
-struct CurrencyInfo {
+
+struct CurrencyList {
     let nameShort: String
     let nameFull: String
     let photo: String
+}
+
+struct CurrencyInfo {
+    let id: Int32
+    let name: String
+    let isMain: Bool
 }
 
 struct CurrencyActual {
@@ -43,109 +50,91 @@ final class CurrencyConverterData {
     
     static let data = CurrencyConverterData()
     private var currencies = [String : CurrencyStorage]()
-    private var currenciesPairs = ["RUBEUR", "EURRUB", "RUBUSD", "USDRUB", "USDEUR", "EURUSD"]
-    private var availableCurrencies = [ "RUB" , "USD", "EUR"]
+    private var currenciesPairs = [String]() //["RUBEUR", "EURRUB", "RUBUSD", "USDRUB", "USDEUR", "EURUSD"]
+    private var availableCurrencies = [String]() //[ "RUB" , "USD", "EUR"]
     private var mainCurrency = "RUB"
     
-    init() {
-        //loadData()
-        //self.loadDataFromStorage()
-        //print(currencies["RUB"]?.historicalCost["EUR"])
-        //print(currencies["EUR"]?.historicalCost["RUB"])
-        //getCurrency()
-        
-        
-
-    }
     
     func loadData() {
         DataManager.dataManager.loadData()
+        saveCurrencyInfo()
     }
     
-    private func loadData1(){
-        
-        var lastCost = ["RUB" : 1, "EUR" : 0.0072132, "USD" : 0.5]
-        var historicalCost = ["RUB": ["2023-05-22" : 1, "2023-05-23" : 1],
-         "EUR": ["2023-05-22" : 0.0072132, "2023-05-23" : 0.008],
-         "USD": ["2023-05-22" : 0.5, "2023-05-23" : 0.03]
-        ]
-        
-        currencies["RUB"] = CurrencyStorage(nameShort: "RUB", nameFull: "Российский рубль", photo: "RUB.jpg", lastCost: lastCost, historicalCost: historicalCost)
-        
-        lastCost = ["RUB" : 88.86, "EUR" : 1, "USD" : 0.98]
-        historicalCost = ["RUB": ["2023-05-22" : 88.887678079, "2023-05-23" : 92.34555676],
-                          "EUR": ["2023-05-22" : 1, "2023-05-23" : 1],
-                          "USD": ["2023-05-22" : 0.98, "2023-05-23" : 0.83]
-                         ]
-        currencies["EUR"] = CurrencyStorage(nameShort: "EUR", nameFull: "Евро", photo: "EUR.jpg", lastCost: lastCost, historicalCost: historicalCost)
-        
-        lastCost = ["RUB" : 91.5, "EUR" : 1.02, "USD" : 1]
-        historicalCost = ["RUB": ["2023-05-22" : 91.5909823, "2023-05-23" : 100.5234528],
-                          "EUR": ["2023-05-22" : 1.02, "2023-05-23" : 1.23],
-                          "USD": ["2023-05-22" : 1, "2023-05-23" : 1]
-                         ]
-        currencies["USD"] = CurrencyStorage(nameShort: "USD", nameFull: "Доллар США", photo: "USD.jpg", lastCost: lastCost, historicalCost: historicalCost)
-
-    }
+//    private func loadData1(){
+//
+//        var lastCost = ["RUB" : 1, "EUR" : 0.0072132, "USD" : 0.5]
+//        var historicalCost = ["RUB": ["2023-05-22" : 1, "2023-05-23" : 1],
+//         "EUR": ["2023-05-22" : 0.0072132, "2023-05-23" : 0.008],
+//         "USD": ["2023-05-22" : 0.5, "2023-05-23" : 0.03]
+//        ]
+//
+//        currencies["RUB"] = CurrencyStorage(nameShort: "RUB", nameFull: "Российский рубль", photo: "RUB.jpg", lastCost: lastCost, historicalCost: historicalCost)
+//
+//        lastCost = ["RUB" : 88.86, "EUR" : 1, "USD" : 0.98]
+//        historicalCost = ["RUB": ["2023-05-22" : 88.887678079, "2023-05-23" : 92.34555676],
+//                          "EUR": ["2023-05-22" : 1, "2023-05-23" : 1],
+//                          "USD": ["2023-05-22" : 0.98, "2023-05-23" : 0.83]
+//                         ]
+//        currencies["EUR"] = CurrencyStorage(nameShort: "EUR", nameFull: "Евро", photo: "EUR.jpg", lastCost: lastCost, historicalCost: historicalCost)
+//
+//        lastCost = ["RUB" : 91.5, "EUR" : 1.02, "USD" : 1]
+//        historicalCost = ["RUB": ["2023-05-22" : 91.5909823, "2023-05-23" : 100.5234528],
+//                          "EUR": ["2023-05-22" : 1.02, "2023-05-23" : 1.23],
+//                          "USD": ["2023-05-22" : 1, "2023-05-23" : 1]
+//                         ]
+//        currencies["USD"] = CurrencyStorage(nameShort: "USD", nameFull: "Доллар США", photo: "USD.jpg", lastCost: lastCost, historicalCost: historicalCost)
+//
+//    }
+//
+//    func getCurrency() {
+//
+//        let path = Bundle.main.path(forResource: "CurrencyList", ofType: "plist")
+//        let data = try! Data(contentsOf: URL.init(fileURLWithPath: path!))
+//        let listArray = try! PropertyListSerialization.propertyList(from: data, options: [], format: nil) as! NSArray
+//
+//
+//        var currenciesInfo = [CurrencyStorage]()
+//        for dataObject in listArray {
+//            if let currencyInfo = dataObject as? [String:Any] {
+//                let lastCost = [String : Double]()
+//                let historicalCost = [String : [String : Double]]()
+//                currenciesInfo.append(CurrencyStorage(nameShort: currencyInfo["nameShort"] as! String, nameFull: currencyInfo["nameFull"] as! String , photo: currencyInfo["photo"] as! String, lastCost: lastCost, historicalCost: historicalCost))
+//            }
+//
+//        }
+//
+//        print(currenciesInfo)
+//        //        for (key, value) in exchangeData["rates"] as! [String: AnyObject] {
+//        //            let filteredCountryData = listArray.filtered(using: NSPredicate(format : "code = %@", key))
+//        //            for filteredCountryDataObject in filteredCountryData {
+//        //                let object = filteredCountryDataObject as? [String:Any]
+//        //                let converterItem = ConverterItem(currencyName: object!["name"] as! String, country: object!["country"] as! String, code: key, symbol: object!["symbol"] as! String, amount: value.stringValue)
+//        //                converterItems.append(converterItem)
+//        //            }
+//        //        }
+//        //        baseConverterItem.convertedList = converterItems
+//        //        self.presenter?.fetchedConvertedCurrency(self.returnConverterItemsWithBaseConverter(baseConverterItem:
+//        //                                                                    }
+//    }
     
-    func getCurrency() {
-        
-        let path = Bundle.main.path(forResource: "CurrencyList", ofType: "plist")
-        let data = try! Data(contentsOf: URL.init(fileURLWithPath: path!))
-        let listArray = try! PropertyListSerialization.propertyList(from: data, options: [], format: nil) as! NSArray
-
-        
-        var currenciesInfo = [CurrencyStorage]()
-        for dataObject in listArray {
-            if let currencyInfo = dataObject as? [String:Any] {
-                let lastCost = [String : Double]()
-                let historicalCost = [String : [String : Double]]()
-                currenciesInfo.append(CurrencyStorage(nameShort: currencyInfo["nameShort"] as! String, nameFull: currencyInfo["nameFull"] as! String , photo: currencyInfo["photo"] as! String, lastCost: lastCost, historicalCost: historicalCost))
-            }
-            
-        }
-
-        print(currenciesInfo)
-        //        for (key, value) in exchangeData["rates"] as! [String: AnyObject] {
-        //            let filteredCountryData = listArray.filtered(using: NSPredicate(format : "code = %@", key))
-        //            for filteredCountryDataObject in filteredCountryData {
-        //                let object = filteredCountryDataObject as? [String:Any]
-        //                let converterItem = ConverterItem(currencyName: object!["name"] as! String, country: object!["country"] as! String, code: key, symbol: object!["symbol"] as! String, amount: value.stringValue)
-        //                converterItems.append(converterItem)
-        //            }
-        //        }
-        //        baseConverterItem.convertedList = converterItems
-        //        self.presenter?.fetchedConvertedCurrency(self.returnConverterItemsWithBaseConverter(baseConverterItem:
-        //                                                                    }
-    }
-    
-    func setCurrencies(infoCurrency: [CurrencyInfo], actualCost: [CurrencyActual], historicalCost: [CurrencyHistorical]) {
+    func setCurrencies(infoCurrency: [CurrencyList], actualCost: [CurrencyActual], historicalCost: [CurrencyHistorical], currencyInfo: [CurrencyInfo]) {
         
         self.currencies = [String : CurrencyStorage]()
         self.availableCurrencies = []
         self.currenciesPairs = []
+        var availableCurrenciesR = [String]()
         
         for currency in infoCurrency {
             let lastCost = [String : Double]()
             let historicalCost = [String : [String : Double]]()
             self.currencies[currency.nameShort] = CurrencyStorage(nameShort: currency.nameShort, nameFull: currency.nameFull, photo: currency.photo, lastCost: lastCost, historicalCost: historicalCost)
-            self.availableCurrencies.append(currency.nameShort)
-        }
-        
-        for currency1 in self.availableCurrencies {
-            for currency2 in self.availableCurrencies {
-                if currency2 != currency1 {
-                    self.currenciesPairs.append("\(currency1)\(currency2)")
-                }
-            }
+            availableCurrenciesR.append(currency.nameShort)
         }
         
         for currencyCost in actualCost {
             self.currencies[currencyCost.currency1]?.lastCost[currencyCost.currency2] = currencyCost.cost
-           // self.currencies[currencyCost.currency1]?.lastCost[currencyCost.currency1] = 1.0
         }
-        
-        
+                
         for currencyHist in historicalCost {
             let currency1 = currencyHist.currency1
             let currency2 = currencyHist.currency2
@@ -158,16 +147,40 @@ final class CurrencyConverterData {
             
         }
         
-        for currency in self.availableCurrencies {
+        for currency in availableCurrenciesR {
             self.currencies[currency]?.lastCost[currency] = 1.0
             
         }
+        
+        if currencyInfo.isEmpty {
+            self.availableCurrencies = availableCurrenciesR
+            self.mainCurrency = availableCurrenciesR[0]
+        } else {
+            for currency in currencyInfo {
+                self.availableCurrencies.append(currency.name)
+                if currency.isMain {
+                    print(currency.name)
+                    self.mainCurrency = currency.name
+                }
+            }
+        }
+        
+        for currency1 in self.availableCurrencies {
+            for currency2 in self.availableCurrencies {
+                if currency2 != currency1 {
+                    self.currenciesPairs.append("\(currency1)\(currency2)")
+                }
+            }
+        }
+        changeFistCurrency(currency: self.mainCurrency)
+        print(availableCurrencies)
+        print(currencyInfo)
+        
             
     }
     
     func getDataForMainScreen() -> ([Currency], String) {
         var mainScreenData = [Currency]()
-        //let keys = [ "RUB" , "USD", "EUR"]
         for key in self.availableCurrencies {
             if let cur = currencies[key] {
                 mainScreenData.append(Currency(name: cur.nameShort, nameFull: cur.nameFull, cost: cur.lastCost[self.mainCurrency] ?? 0, photo: UIImage(imageLiteralResourceName: cur.photo)))
@@ -192,21 +205,12 @@ final class CurrencyConverterData {
         }
         let secondData = Currency(name: second?.nameShort ?? "", nameFull: second?.nameFull ?? "" , cost: second?.lastCost[firstCurrency] ?? 1, photo: image!)
         
-        //let chartData = self.currencies[firstCurrency]?.historicalCost[secondCurrency] ?? [:]
         let chartData = self.currencies[secondCurrency]?.historicalCost[firstCurrency] ?? [:]
-//        print(chartData)
-//        print(sordDate(data: chartData))
-        
         let data = sordDate(data: chartData)
-        print(firstData.name)
-        print(secondData.name)
-        print(data)
         
         return (firstData, secondData, data)
     }
     
-
-
     func updateCost(pair: String, newCost: Double) {
         let index = pair.index(pair.startIndex, offsetBy: 3)
         let firstCurrency = String(pair.prefix(upTo: index))
@@ -232,7 +236,6 @@ final class CurrencyConverterData {
         for price in data {
             if let cost = price.close {
                 let costRound = Double (round(1000000 * cost) / 1000000)
-                //self.currencies[firstCurrency]?.historicalCost[secondCurrency]?[price.date] = costRound
                 self.currencies[secondCurrency]?.historicalCost[firstCurrency]?[price.date] = costRound
             }
             count -= 1
@@ -247,87 +250,86 @@ final class CurrencyConverterData {
         self.currenciesPairs
     }
         
-    private func loadDataFromStorage() {
-        let context = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
-        let infoRequest: NSFetchRequest<InfoEntity> = InfoEntity.fetchRequest()
-        do {
-            let savedData = try context.fetch(infoRequest)
-            for currency in savedData {
-                if let shortName = currency.nameShort {
-                    let fullName = currency.nameFull ?? shortName
-                    let photo = currency.photo ?? ""
-                    let lastCost = [String : Double]()
-                    let historicalCost = [String : [String : Double]]()
-                    self.currencies[shortName] = CurrencyStorage(nameShort: shortName, nameFull: fullName, photo: photo, lastCost: lastCost, historicalCost: historicalCost)
-                }
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-        let actualRequest: NSFetchRequest<ActualCostEntity> = ActualCostEntity.fetchRequest()
-        do {
-            let savedData = try context.fetch(actualRequest)
-            for currency in savedData {
-                if let currency1 = currency.currency1, let currency2 = currency.currency2 {
-                    let cost = currency.cost
-                    self.currencies[currency1]?.lastCost[currency2] = cost
-                }
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-        let historicalRequest: NSFetchRequest<HistoricalCostEntity> = HistoricalCostEntity.fetchRequest()
-        do {
-            let savedData = try context.fetch(historicalRequest)
-            for currency in savedData {
-                if let currency1 = currency.currency1, let currency2 = currency.currency2 {
-                    let cost = currency.cost
-                    if let date = currency.date {
-                        if self.currencies[currency1]?.historicalCost[currency2] == nil {
-                            self.currencies[currency1]?.historicalCost[currency2] = [:]
-                        }
-                        self.currencies[currency1]?.historicalCost[currency2]?[date] = cost
-                    }
-                }
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
+//    private func loadDataFromStorage() {
+//        let context = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
+//        let infoRequest: NSFetchRequest<InfoEntity> = InfoEntity.fetchRequest()
+//        do {
+//            let savedData = try context.fetch(infoRequest)
+//            for currency in savedData {
+//                if let shortName = currency.nameShort {
+//                    let fullName = currency.nameFull ?? shortName
+//                    let photo = currency.photo ?? ""
+//                    let lastCost = [String : Double]()
+//                    let historicalCost = [String : [String : Double]]()
+//                    self.currencies[shortName] = CurrencyStorage(nameShort: shortName, nameFull: fullName, photo: photo, lastCost: lastCost, historicalCost: historicalCost)
+//                }
+//            }
+//        } catch {
+//            print(error.localizedDescription)
+//        }
+//
+//        let actualRequest: NSFetchRequest<ActualCostEntity> = ActualCostEntity.fetchRequest()
+//        do {
+//            let savedData = try context.fetch(actualRequest)
+//            for currency in savedData {
+//                if let currency1 = currency.currency1, let currency2 = currency.currency2 {
+//                    let cost = currency.cost
+//                    self.currencies[currency1]?.lastCost[currency2] = cost
+//                }
+//            }
+//        } catch {
+//            print(error.localizedDescription)
+//        }
+//
+//        let historicalRequest: NSFetchRequest<HistoricalCostEntity> = HistoricalCostEntity.fetchRequest()
+//        do {
+//            let savedData = try context.fetch(historicalRequest)
+//            for currency in savedData {
+//                if let currency1 = currency.currency1, let currency2 = currency.currency2 {
+//                    let cost = currency.cost
+//                    if let date = currency.date {
+//                        if self.currencies[currency1]?.historicalCost[currency2] == nil {
+//                            self.currencies[currency1]?.historicalCost[currency2] = [:]
+//                        }
+//                        self.currencies[currency1]?.historicalCost[currency2]?[date] = cost
+//                    }
+//                }
+//            }
+//        } catch {
+//            print(error.localizedDescription)
+//        }
+//    }
     
     func saveData() {
-        for currency in self.currencies.values {
-            let info = CurrencyInfo(nameShort: currency.nameShort, nameFull: currency.nameFull, photo: currency.photo)
-            let coreDataStack = AppDelegate.sharedAppDelegate.coreDataStack
-            //InfoEntity.createOrUpdate(data: info, with: coreDataStack)
-            for actualCost in currency.lastCost {
-                let cost = CurrencyActual(currency1: currency.nameShort, currency2: actualCost.key, cost: actualCost.value)
-                ActualCostEntity.createOrUpdate(data: cost, with: coreDataStack)
-            }
-            
-            for currency2 in currency.historicalCost.keys {
-                if let dataForCurrency = currency.historicalCost[currency2] {
-                    var countDate = 1
-                    for data in dataForCurrency {
-                        let hCost = CurrencyHistorical(currency1: currency.nameShort, currency2: currency2, cost: data.value, date: data.key, id: Int32(countDate))
-                        HistoricalCostEntity.createOrUpdate(data: hCost, with: coreDataStack)
-                        countDate += 1
-                    }
-                }
-            }
-        }
-        AppDelegate.sharedAppDelegate.coreDataStack.saveContext()
+        let currenciesForStorage = self.currencies.values.map{$0}
+        DataManager.dataManager.saveDataInStorage(currencies: currenciesForStorage)
+//        for currency in self.currencies.values {
+//            let info = CurrencyInfo(nameShort: currency.nameShort, nameFull: currency.nameFull, photo: currency.photo)
+//            let coreDataStack = AppDelegate.sharedAppDelegate.coreDataStack
+//            //InfoEntity.createOrUpdate(data: info, with: coreDataStack)
+//            for actualCost in currency.lastCost {
+//                let cost = CurrencyActual(currency1: currency.nameShort, currency2: actualCost.key, cost: actualCost.value)
+//                ActualCostEntity.createOrUpdate(data: cost, with: coreDataStack)
+//            }
+//
+//            for currency2 in currency.historicalCost.keys {
+//                if let dataForCurrency = currency.historicalCost[currency2] {
+//                    var countDate = 1
+//                    for data in dataForCurrency {
+//                        let hCost = CurrencyHistorical(currency1: currency.nameShort, currency2: currency2, cost: data.value, date: data.key, id: Int32(countDate))
+//                        HistoricalCostEntity.createOrUpdate(data: hCost, with: coreDataStack)
+//                        countDate += 1
+//                    }
+//                }
+//            }
+//        }
+//        AppDelegate.sharedAppDelegate.coreDataStack.saveContext()
 
     }
     
     func changeMainCurrency(currency: String) {
-        if let index = self.availableCurrencies.firstIndex(of: currency) {
-            let reserv = self.availableCurrencies.remove(at: index)
-            self.availableCurrencies.insert(reserv, at: 0)
-            self.mainCurrency = reserv
-        }
+        changeFistCurrency(currency: currency)
+        self.saveCurrencyInfo()
     }
         
 }
@@ -351,31 +353,45 @@ private extension CurrencyConverterData {
         
         var xValueSort = [String]()
         var yValueSort = [Double]()
-
+        
         for x in indexPosition {
             xValueSort.append(xValues[x])
             yValueSort.append(yValues[x])
         }
-//        let dateFormatter1 = DateFormatter()
-//        dateFormatter1.dateFormat = "yy-MM-dd"
-//        let dates1 = xValues.compactMap { dateFormatter1.date(from: $0) }
-//        print("NEW!")
-//        print(dates1)
-//
-//        print(xValueSort)
-//        print(yValueSort)
-
+        //        let dateFormatter1 = DateFormatter()
+        //        dateFormatter1.dateFormat = "yy-MM-dd"
+        //        let dates1 = xValues.compactMap { dateFormatter1.date(from: $0) }
+        //        print("NEW!")
+        //        print(dates1)
+        //
+        //        print(xValueSort)
+        //        print(yValueSort)
+        
         return (xValueSort, yValueSort)
     }
     
-//    private func deletYear(str: String) -> String {
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.locale = Locale(identifier: "ru_RU")
-//        dateFormatter.dateFormat = "dd-MMMM"
-//        let stringDate = dateFormatter.string(from: Date())
-//        print(stringDate)
-//
-//    }
+    private func saveCurrencyInfo() {
+        var currenciesInfo = [CurrencyInfo]()
+        var id = 1
+        for currency in self.availableCurrencies {
+            var isMain = false
+            if currency == self.mainCurrency {
+                isMain = true
+            }
+            currenciesInfo.append(CurrencyInfo(id: Int32(id), name: currency, isMain: isMain))
+            id += 1
+        }
+        DataManager.dataManager.saveInfoCurrency(currencies: currenciesInfo)
+    }
+    
+    private func changeFistCurrency(currency: String) {
+        if let index = self.availableCurrencies.firstIndex(of: currency) {
+            let reserv = self.availableCurrencies.remove(at: index)
+            self.availableCurrencies.insert(reserv, at: 0)
+            self.mainCurrency = reserv
+        }
+    }
+    
 }
             
 private struct SortDate {

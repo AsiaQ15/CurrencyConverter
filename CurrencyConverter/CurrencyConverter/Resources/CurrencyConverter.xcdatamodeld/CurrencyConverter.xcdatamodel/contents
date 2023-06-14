@@ -13,8 +13,8 @@
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <entity name="InfoEntity" representedClassName=".InfoEntity" syncable="YES">
-        <attribute name="nameFull" optional="YES" attributeType="String"/>
-        <attribute name="nameShort" optional="YES" attributeType="String"/>
-        <attribute name="photo" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isMain" optional="YES" attributeType="String" defaultValueString="0"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
 </model>
