@@ -1,7 +1,7 @@
 # CurrencyConverter
 
-
-
+Простой конвертер валют, написанный на Swift 5.
+Обменные курсы подгружаются из: https://financialmodelingprep.com
 
 Стек технологий:
 * Swift
@@ -15,8 +15,4 @@
 * SnapKit
 * Charts
 
-
-    ![Simulator Screen Shot - iPhone 14 Pro - 2023-06-15 at 21 02 32](https://github.com/AsiaQ15/CurrencyConverter/assets/113234601/3b3b8b5e-c570-4092-99bb-ced922e308a1)
- 
-    
-![Simulator Screen Shot - iPhone 14 Pro - 2023-06-15 at 21 02 43](https://github.com/AsiaQ15/CurrencyConverter/assets/113234601/7ce4ef69-3c5c-42a0-a8ef-763e38b0efaa)
+<img width="480" alt="Снимок экрана 2023-06-15 в 21 27 47" src="https://github.com/AsiaQ15/CurrencyConverter/assets/113234601/0e4c382f-4f0c-449e-bf59-f35fe44495a7">
