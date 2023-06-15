@@ -24,7 +24,6 @@ final class FlowController {
         self.firstPresenter = MainScreenPresenter(model: currencyData, coordinatingController: coordinatingController)
         let viewController = MainScreenTableViewController(presenter: firstPresenter as! IMainScreenPresenter)
         firstPresenter.setVC(vc: viewController)
-        print(viewController)
         
         self.coordinatingController.register(module: .mainScreenPresener, navItem: self.firstPresenter)
         self.modules.append(self.makeDetailPtesente())

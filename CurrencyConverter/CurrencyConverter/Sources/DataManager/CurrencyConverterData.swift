@@ -96,7 +96,6 @@ final class CurrencyConverterData {
             for currency in currencyInfo {
                 self.availableCurrencies.append(currency.name)
                 if currency.isMain {
-                    print(currency.name)
                     self.mainCurrency = currency.name
                 }
             }

@@ -20,7 +20,7 @@ enum NavigationModule {
     case detailsPresenter
 }
 
-protocol ICoordinatingController: AnyObject{
+protocol ICoordinatingController: AnyObject {
     
     func back(animated: Bool)
     func push<Parameters>(module: NavigationModule, parameters: Parameters, animated: Bool)
@@ -60,7 +60,6 @@ extension CoordinatingController: ICoordinatingController {
             navigationController?.pushViewController(nextVC, animated: animated)
         }
         self.modulesStack.append(nextModule)
-        print(modulesStack)
     }
     
     func back(animated: Bool) {

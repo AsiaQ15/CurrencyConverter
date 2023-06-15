@@ -23,20 +23,12 @@ extension HistoricalCostEntity {
     @NSManaged public var id: Int32
     
     internal class func createOrUpdate(data: CurrencyHistorical, with stack: CoreDataStack) {
-        //let pictureID = Int32(item.id)
         var current: HistoricalCostEntity?
         let currentFetch: NSFetchRequest<HistoricalCostEntity> = HistoricalCostEntity.fetchRequest()
-
-//        let newItemIDPredicate = NSPredicate(format: "%@ = %i", (\PictureEntity.id)._kvcKeyPathString!, pictureID)
-//        currentPostFetch.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [newItemIDPredicate])
-//
-//        //let request = NSFetchRequest(entityName: "Location")
         let subPredicate1 = NSPredicate(format: "(id = %i)", data.id)
         let subPredicate2 = NSPredicate(format: "(currency1 = %@)", data.currency1)
         let subPredicate3 = NSPredicate(format: "(currency2 = %@)", data.currency2)
-        
         currentFetch.predicate = NSCompoundPredicate(type: .and, subpredicates: [subPredicate1, subPredicate2, subPredicate3])
-
         do {
             let results = try stack.managedContext.fetch(currentFetch)
             if results.isEmpty {
@@ -51,7 +43,6 @@ extension HistoricalCostEntity {
         } catch let error as NSError {
             print("Fetch error: \(error) description: \(error.userInfo)")
         }
-        //print(current)
     }
 
     internal func update(data: CurrencyHistorical) {

@@ -24,11 +24,8 @@ extension InfoEntity {
         let currencyID = Int32(data.id)
         var currentInfo: InfoEntity?
         let currencyPostFetch: NSFetchRequest<InfoEntity> = InfoEntity.fetchRequest()
-        
         let itemIDPredicate = NSPredicate(format: "(id = %i)", currencyID)
-        
         currencyPostFetch.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [itemIDPredicate])
-
         do {
             let results = try stack.managedContext.fetch(currencyPostFetch)
             if results.isEmpty {
