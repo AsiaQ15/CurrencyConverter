@@ -48,7 +48,7 @@ final class MainScreenPresenter: IMainScreenPresenter {
         let currency = model.getData(row)
         cell.displayName(name: currency.nameFull)
         let costRound = Double(round(currency.cost * 1000)/1000)
-        let cost = " 1 \(self.model.getMainCurrency()) = \(costRound) \(currency.name)"
+        let cost = " 1 \(currency.name) = \(costRound) \(self.model.getMainCurrency())"
         cell.displayCost(cost: cost)
         cell.displayImage(image: currency.photo)
     }

@@ -112,7 +112,6 @@
 				2110DF032A3A4C1F001B8515 /* Coordinator */,
 				2109F2282A2C972700602C6B /* Sources */,
 				2109F2292A2C973300602C6B /* Resources */,
-				2109F2382A2CAA2300602C6B /* FontSettings.swift */,
 				2109F2212A2C934600602C6B /* Info.plist */,
 			);
 			path = CurrencyConverter;
@@ -132,9 +131,9 @@
 			children = (
 				2110DF002A38DDEF001B8515 /* DataManager */,
 				2110DEEF2A37293D001B8515 /* CoreData */,
+				2110DEE82A34CC6B001B8515 /* Network */,
 				2109F22A2A2C974D00602C6B /* MainScreen */,
 				2109F23C2A2F9CC000602C6B /* Details */,
-				2110DEE82A34CC6B001B8515 /* Network */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -142,6 +141,7 @@
 		2109F2292A2C973300602C6B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2109F2382A2CAA2300602C6B /* FontSettings.swift */,
 				2110DEFE2A38D402001B8515 /* CurrencyList.plist */,
 				2109F2192A2C934500602C6B /* CurrencyConverter.xcdatamodeld */,
 				2109F21E2A2C934600602C6B /* LaunchScreen.storyboard */,

@@ -14,21 +14,19 @@ final class DetailsViewController: UIViewController {
     private let chartView = DetailsChartView()
     private let presenter: IDetailsPresenter
     
-    
-    
     init(presenter: IDetailsPresenter) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configuration()
         self.detailsView.setDelegate(self)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     func setFirst(image: UIImage, name: String, cost: String) {
@@ -68,6 +66,7 @@ final class DetailsViewController: UIViewController {
 }
 
 private extension DetailsViewController {
+    
     private func configuration() {
         self.view.backgroundColor = Constants.backgroundColor
         self.view.addSubview(self.detailsView)

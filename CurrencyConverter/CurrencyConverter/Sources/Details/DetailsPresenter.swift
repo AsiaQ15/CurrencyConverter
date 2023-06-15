@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+
 protocol IDetailsPresenter: AnyObject {
     
     func getVC() -> UIViewController?
@@ -39,7 +40,6 @@ final class DetailsPresenter: IDetailsPresenter {
         detailsView?.setFirstCount(count: String(model.getFirstCount()))
         detailsView?.setName(name: model.getScreenName())
         let dataChart = model.getChartData()
-        print(dataChart)
         detailsView?.setChartData(xValues: dataChart.0, yValues: dataChart.1, name: dataChart.2, coef: dataChart.3)
         detailsView?.updateChart()
     }
@@ -60,40 +60,10 @@ final class DetailsPresenter: IDetailsPresenter {
         model.swap()
         configure()
     }
-    
-//
-//    var numberOfCurrency: Int {
-//        return model.currencyCount()
-//    }
-//
-//    init() {
-//        self.model = model
-//    }
-//
-//    func setVC(view: MainScreenTableViewController){
-//        self.mainSreenView = view
-//    }
-//
-//    func getData(id: Int) -> Currency {
-//        self.model.getData(id)
-//    }
-//
-//    func configure(cell: MainScreenTableViewCell, forRow row: Int) {
-//        let currency = model.getData(row)
-//
-//        cell.displayName(name: currency.name)
-//        let cost = " 1 RUB = \(currency.cost) \(currency.name)"
-//        cell.displayCost(cost: cost)
-//        cell.displayImage(image: currency.photo)
-//
-//        //cell.display(title: book.title)
-//        //cell.display(author: book.author)
-//        //cell.display(releaseDate: book.releaseDate?.relativeDescription() ?? "Unknown")
-//    }
-    
 }
 
 extension DetailsPresenter: INavigationItem {
+    
     var vc: UIViewController? {
         self.detailsView
     }
@@ -103,11 +73,7 @@ extension DetailsPresenter: INavigationItem {
         model.setData(first: data.0, second: data.1, chart: data.2)
         configure()
     }
-//    func setData(first: Currency, second: Currency, chartData: ([String],[Double])) {
-//        model.setData(first: first, second: second, chart: chartData)
-//        configure()
-//    }
-    
+
     func setVC(vc: UIViewController?) {
         guard let vcDetails = vc as? DetailsViewController else { return }
         self.detailsView = vcDetails

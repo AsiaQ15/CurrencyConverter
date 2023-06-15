@@ -9,6 +9,7 @@ import UIKit
 import Charts
 import SnapKit
 
+
 final class DetailsChartView: UIView {
 
     private var lineChartView = LineChartView()
@@ -65,16 +66,11 @@ final class DetailsChartView: UIView {
         let set1 = LineChartDataSet.init(entries: yDataArray1, label: labelName)
         set1.colors = [Constants.lineColor]
         set1.drawCirclesEnabled = false
-        set1.lineWidth = 1.0
+        set1.lineWidth = Constants.lineWidth
         let data = LineChartData.init(dataSets: [set1])
         
         let leftAxis = self.lineChartView.leftAxis
         leftAxis.calculate(min: max_val + 1, max: min_val - 1)
-        let valFormatter = NumberFormatter()
-        valFormatter.numberStyle = .decimal
-        valFormatter.maximumFractionDigits = 2
-
-        leftAxis.valueFormatter = DefaultAxisValueFormatter(formatter: valFormatter)
 
         lineChartView.data = data
         lineChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0, easingOption: .easeInBack)
@@ -107,39 +103,37 @@ private extension DetailsChartView {
         self.lineChartView.scaleYEnabled = false
         
         self.lineChartView.noDataText = "Нет данных"
-        self.lineChartView.noDataTextColor = UIColor.gray
-        self.lineChartView.noDataFont = UIFont.boldSystemFont(ofSize: 14)
+        self.lineChartView.noDataTextColor = Constants.lineColor
+        self.lineChartView.noDataFont = Constants.noDataFont
         self.lineChartView.rightAxis.enabled = false
         
         let leftAxis = self.lineChartView.leftAxis
         leftAxis.forceLabelsEnabled = false
         leftAxis.axisLineColor = Constants.lineColor
         leftAxis.labelTextColor = Constants.lineColor
-        leftAxis.labelFont = UIFont.systemFont(ofSize: 10)
+        leftAxis.labelFont = Constants.labelFontLeft
         leftAxis.labelPosition = .outsideChart
-        leftAxis.gridColor = .lightGray
+        leftAxis.gridColor = Constants.gridColor
         leftAxis.gridAntialiasEnabled = false
      
         let xAxis = self.lineChartView.xAxis
         xAxis.granularityEnabled = true
         xAxis.labelTextColor = Constants.lineColor
-        xAxis.labelFont = UIFont.systemFont(ofSize: 8)
+        xAxis.labelFont = Constants.labelFontX
         xAxis.labelPosition = .bottomInside
-        xAxis.gridColor = .lightGray
+        xAxis.gridColor = Constants.gridColor
         xAxis.axisLineColor = Constants.lineColor
-        
     }
     
     private func addLimitLine(_ value: Double, _ desc: String, _ color: UIColor) {
         let limitLine = ChartLimitLine.init(limit: value, label: desc)
-        limitLine.lineWidth = 1
+        limitLine.lineWidth = Constants.lineWidth
         limitLine.lineColor = color
         limitLine.lineDashLengths = [2.0,2.0]
-        limitLine.valueFont = UIFont.systemFont(ofSize: 10.0)
+        limitLine.valueFont = Constants.valueFont
         limitLine.valueTextColor = color
         limitLine.labelPosition = .rightBottom
         self.lineChartView.leftAxis.addLimitLine(limitLine)
-        
     }
     
     private func removeLimitLine() {
@@ -150,21 +144,19 @@ private extension DetailsChartView {
 
 }
 
-final class VDChartAxisValueFormatter: NSObject, AxisValueFormatter, ValueFormatter{
-    
-    func stringForValue(_ value: Double, entry: Charts.ChartDataEntry, dataSetIndex: Int, viewPortHandler: Charts.ViewPortHandler?) -> String {
-        return String(format:"%.2f%%",value)
-    }
+final class VDChartAxisValueFormatter: NSObject, AxisValueFormatter {
     
     var values:NSArray?
     
     override init() {
         super.init()
     }
+    
     init(_ values: NSArray) {
         super.init();
         self.values = values
     }
+    
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
         if values == nil {
             return "\(value)"
@@ -182,6 +174,7 @@ private enum Constants {
     static let maxColor = UIColor.systemRed
     static let minColor = UIColor.systemGreen
     static let lineColor = UIColor.systemGray
+    static let gridColor = UIColor.systemGray4
     
     static let borderColor = UIColor.systemGray2.cgColor
     static let borderWidth = CGFloat(1)
@@ -190,14 +183,12 @@ private enum Constants {
     static let shadowOpacity = Float(0.5)
     static let shadowOffset = CGSize(width: 1.0, height: 1.0)
     
-//    static let leftInset = 10
-//    static let rightInset = 10
-//    static let topOffset = 10
-//    static let spaceBetween = 30
-//    static let bottomInset = 50
-//
-//    static let detailsHeight = 190
+    static let labelFontLeft = Fonts.labelFont10
+    static let labelFontX = Fonts.labelFont8
+    static let noDataFont = Fonts.noDataFont
+    static let valueFont = Fonts.labelFont10
     
+    static let lineWidth = CGFloat(1)
+   
 }
-
 

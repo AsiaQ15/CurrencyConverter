@@ -8,14 +8,13 @@
 import UIKit
 import CoreData
 
+
 struct CurrencyStorage {
     let nameShort: String
     let nameFull: String
     let photo: String
-    //сколько текущая валюта стоит в остальных 
-    var lastCost: [String : Double] // [Currency : Cost]
-    //сколько в этой валюте стоят остальные ( цена по датам)
-    var historicalCost: [String : [String : Double]] // // [Currency : [Date : Cost]]
+    var lastCost: [String : Double]
+    var historicalCost: [String : [String : Double]]
 }
 
 struct CurrencyList {

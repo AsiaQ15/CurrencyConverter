@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 
+
 final class DetailsView: UIView {
 
     private var firstImage = UIImageView()
@@ -146,7 +147,7 @@ private extension DetailsView {
         self.secondLabelCost.snp.makeConstraints { make in
             make.top.equalTo(self.secondLabelName.snp.bottom)
             make.left.equalTo(self.secondImage.snp.right).offset(Constants.Spacing.medium)
-            make.right.equalTo(self.secondCount.snp.left)//inset(Constants.Spacing.small)
+            make.right.equalTo(self.secondCount.snp.left)
             make.height.equalTo(Constants.heightLabel)
         }
         

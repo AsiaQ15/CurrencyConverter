@@ -32,55 +32,6 @@ final class ConverterAPIDataManager {
         }
         self.fetchApiData(urlString: url, completion: completion)
     }
-    
-    
-//    func historicalData(currancyPair pair: String) {
-//        //let pair = "JPYUSD"
-//        let url = URL(string: "https://financialmodelingprep.com/api/v3/historical-price-full/forex/\(pair)?apikey=\(api_key)")
-//
-//        var request = URLRequest(url: url!)
-//
-//        request.addValue("application/json", forHTTPHeaderField: "Accept")
-//        let task = URLSession.shared.dataTask(with: url!) { data, response, error in
-//            guard error == nil else {
-//                print(error!)
-//                return
-//            }
-//            guard let data = data else {
-//                print("Data is empty")
-//                return
-//            }
-//
-//            let json = try! JSONSerialization.jsonObject(with: data, options: [])
-//            print(json)
-//        }
-//
-//        task.resume()
-//    }
-//
-//    func updateCost(currancyPair pair: String) {
-//
-//        let url = URL(string: "https://financialmodelingprep.com/api/v3/historical-chart/4hour/\(pair)?apikey=\(api_key)")
-//
-//        var request = URLRequest(url: url!)
-//
-//        request.addValue("application/json", forHTTPHeaderField: "Accept")
-//        let task = URLSession.shared.dataTask(with: url!) { data, response, error in
-//            guard error == nil else {
-//                print(error!)
-//                return
-//            }
-//            guard let data = data else {
-//                print("Data is empty")
-//                return
-//            }
-//
-//            let json = try! JSONSerialization.jsonObject(with: data, options: [])
-//            print(json)
-//        }
-//
-//        task.resume()
-//    }
 
 }
 
@@ -144,5 +95,4 @@ private extension ConverterAPIDataManager {
         return error
     }
 }
-
 

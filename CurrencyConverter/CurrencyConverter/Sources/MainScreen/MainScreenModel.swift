@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 struct Currency {
     var name: String
     var nameFull: String
