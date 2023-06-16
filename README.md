@@ -1,7 +1,7 @@
 # CurrencyConverter
 
 Простой конвертер валют, написанный на Swift 5.
-Обменные курсы подгружаются из: https://financialmodelingprep.com
+Обменные курсы подгружаются из: https://site.financialmodelingprep.com/developer/docs/#Forex-(FX)
 
 Стек технологий:
 * Swift
