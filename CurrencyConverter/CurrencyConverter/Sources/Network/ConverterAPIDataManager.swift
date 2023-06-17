@@ -22,7 +22,6 @@ final class ConverterAPIDataManager {
     static let shared = ConverterAPIDataManager()
     
     private let api_key = "c634dac2ed75bec4e079d45961638b21"
-    //"0d3c2d8abf0034710417d5c6878c521c"
     
     func updateData<T: Decodable>(currancyPair pair: String, type: RequaestType, completion: @escaping (T?, ErrorModel?) -> ()) {
         var url = "\(pair)?apikey=\(api_key)"
