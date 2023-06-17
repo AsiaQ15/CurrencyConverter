@@ -38,6 +38,7 @@
 		2110DEFD2A372A70001B8515 /* HistoricalCostEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2110DEF72A372A70001B8515 /* HistoricalCostEntity+CoreDataProperties.swift */; };
 		2110DEFF2A38D402001B8515 /* CurrencyList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2110DEFE2A38D402001B8515 /* CurrencyList.plist */; };
 		2110DF022A3A0C6E001B8515 /* DataManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2110DF012A3A0C6E001B8515 /* DataManger.swift */; };
+		211B3FBE2A3D8D79001C770E /* key.plist in Resources */ = {isa = PBXBuildFile; fileRef = 211B3FBD2A3D8D79001C770E /* key.plist */; };
 		212059092A32480A0083B541 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 212059082A32480A0083B541 /* Charts */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +75,7 @@
 		2110DEF72A372A70001B8515 /* HistoricalCostEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistoricalCostEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2110DEFE2A38D402001B8515 /* CurrencyList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = CurrencyList.plist; sourceTree = "<group>"; };
 		2110DF012A3A0C6E001B8515 /* DataManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManger.swift; sourceTree = "<group>"; };
+		211B3FBD2A3D8D79001C770E /* key.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = key.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 				2109F2192A2C934500602C6B /* CurrencyConverter.xcdatamodeld */,
 				2109F21E2A2C934600602C6B /* LaunchScreen.storyboard */,
 				2109F21C2A2C934600602C6B /* Assets.xcassets */,
+				211B3FBD2A3D8D79001C770E /* key.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				211B3FBE2A3D8D79001C770E /* key.plist in Resources */,
 				2109F2202A2C934600602C6B /* LaunchScreen.storyboard in Resources */,
 				2109F21D2A2C934600602C6B /* Assets.xcassets in Resources */,
 				2110DEFF2A38D402001B8515 /* CurrencyList.plist in Resources */,

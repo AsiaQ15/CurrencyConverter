@@ -21,7 +21,13 @@ final class ConverterAPIDataManager {
     
     static let shared = ConverterAPIDataManager()
     
-    private let api_key = "c634dac2ed75bec4e079d45961638b21"
+    private var api_key = ""
+    
+    init() {
+        print("key")
+        getKey()
+        print(self.api_key)
+    }
     
     func updateData<T: Decodable>(currancyPair pair: String, type: RequaestType, completion: @escaping (T?, ErrorModel?) -> ()) {
         var url = "\(pair)?apikey=\(api_key)"
@@ -35,6 +41,17 @@ final class ConverterAPIDataManager {
 }
 
 private extension ConverterAPIDataManager {
+    
+    private func getKey() {
+        let path = Bundle.main.path(forResource: "key", ofType: "plist")
+        let data = try! Data(contentsOf: URL.init(fileURLWithPath: path!))
+        let listArray = try! PropertyListSerialization.propertyList(from: data, options: [], format: nil) as! NSArray
+        for dataObject in listArray {
+            if let keyInfo = dataObject as? String {
+                self.api_key = keyInfo
+            }
+        }
+    }
     
     private func fetchApiData<T: Decodable>(urlString: String, completion: @escaping (T?, ErrorModel?) -> ()) {
         guard let url = URL(string: urlString) else { return }
