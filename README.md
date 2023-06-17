@@ -15,4 +15,6 @@
 * SnapKit
 * Charts
 
-<img width="480" alt="Снимок экрана 2023-06-15 в 21 27 47" src="https://github.com/AsiaQ15/CurrencyConverter/assets/113234601/0e4c382f-4f0c-449e-bf59-f35fe44495a7">
+https://raw.githubusercontent.com/AsiaQ15/CurrencyConverter/develop/screen.png
+
+<img width="480" alt="screen" src="https://raw.githubusercontent.com/AsiaQ15/CurrencyConverter/develop/screen.png">
